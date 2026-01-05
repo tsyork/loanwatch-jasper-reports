@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 7.9.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LW Borrower Customers" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="782" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9e459e8b-dadf-4a5b-9a8b-f77814092d1e">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[YXIuYXJfY3VzdG9tZXIgLDE1LDE1LDY4ODE0Nzc2LWFlZjYtNGFiMi04YTRiLTlmZjg2ODk1ODAw
+MDs=]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="LoanWatch Test DB"/>
+	<parameter name="Borrower Key" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT a.borrower_fk,
+	a.cust_name,
+	a.cust_city,
+	a.cust_state,
+	a.cust_country,
+	b.borrower_name
+FROM ar.ar_customer a
+	join borrower.borrower b on a.borrower_fk = b.record_id
+WHERE 
+	 ($P{Borrower Key} = 0 OR a.borrower_fk = $P{Borrower Key})
+ORDER BY b.borrower_name ASC, a.cust_name ASC]]>
+	</queryString>
+	<field name="borrower_fk" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="borrower_fk"/>
+		<property name="com.jaspersoft.studio.field.label" value="borrower_fk"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ar_customer"/>
+		<fieldDescription><![CDATA[The record id of the Borrower where the AR Customer is under]]></fieldDescription>
+	</field>
+	<field name="cust_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cust_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="cust_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ar_customer"/>
+		<fieldDescription><![CDATA[The name of the AR Customer]]></fieldDescription>
+	</field>
+	<field name="cust_city" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cust_city"/>
+		<property name="com.jaspersoft.studio.field.label" value="cust_city"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ar_customer"/>
+		<fieldDescription><![CDATA[The city of the AR Customer]]></fieldDescription>
+	</field>
+	<field name="cust_state" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cust_state"/>
+		<property name="com.jaspersoft.studio.field.label" value="cust_state"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ar_customer"/>
+		<fieldDescription><![CDATA[The state of the AR Customer]]></fieldDescription>
+	</field>
+	<field name="cust_country" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cust_country"/>
+		<property name="com.jaspersoft.studio.field.label" value="cust_country"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ar_customer"/>
+		<fieldDescription><![CDATA[The country of the AR Customer]]></fieldDescription>
+	</field>
+	<field name="borrower_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="borrower_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="borrower_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="borrower"/>
+		<fieldDescription><![CDATA[The name of the Borrower]]></fieldDescription>
+	</field>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{borrower_fk}]]></groupExpression>
+		<groupHeader>
+			<band height="69">
+				<textField>
+					<reportElement mode="Opaque" x="0" y="0" width="782" height="32" forecolor="#006699" backcolor="#E6E6E6" uuid="fb0d65ec-66f5-47b9-beec-fbef7084f0be"/>
+					<textElement>
+						<font size="24" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{borrower_name}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="-20" y="32" width="842" height="1" forecolor="#666666" uuid="36035ad7-e507-462b-a6ad-f4281037bebf"/>
+				</line>
+				<line>
+					<reportElement x="-20" y="68" width="842" height="1" forecolor="#666666" uuid="561384ca-7ea4-47cb-a743-7abcc1af4c20"/>
+				</line>
+				<staticText>
+					<reportElement mode="Opaque" x="20" y="33" width="350" height="35" forecolor="#006699" backcolor="#E6E6E6" uuid="7ce05119-2453-443c-a3f9-31765052a322">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="da830474-a2cb-4610-88a3-0f91715f644b"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Customer Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="370" y="33" width="200" height="35" forecolor="#006699" backcolor="#E6E6E6" uuid="9d2a5094-f8f2-4944-82bb-8c6f282e306c">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="90409251-8021-4c75-b066-9d8ae09a77a2"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[City]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="570" y="33" width="116" height="35" forecolor="#006699" backcolor="#E6E6E6" uuid="f8fd6752-183f-4775-9b52-3833934b9140">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2beaa58e-6c23-4c09-94a3-2aae1471b01e"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[State/
+Province]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="686" y="33" width="116" height="35" forecolor="#006699" backcolor="#E6E6E6" uuid="1b311a05-33a0-494b-9b9c-e7650ba3d0ef">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3f89b534-c133-4939-884b-ff95b6a88183"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Country]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="842" height="92" backcolor="#006699" uuid="a44ee38d-d36a-4c6a-98c5-e25f9ebfe14c"/>
+				<staticText>
+					<reportElement x="20" y="20" width="500" height="43" forecolor="#FFFFFF" uuid="f2d21979-86f7-42c8-bd73-677f1a36cd33"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Borrower Customers]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="20" y="19" width="762" height="1" uuid="1b6263b7-b2df-4d14-8f20-1ac542341d62"/>
+			</line>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="20" y="0" width="350" height="20" uuid="7d0b056b-ffd3-481d-8e1a-39a3c472a291">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="da830474-a2cb-4610-88a3-0f91715f644b"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_name}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="370" y="0" width="200" height="20" uuid="3279248e-e87b-4540-9cb1-8431861179ec">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="90409251-8021-4c75-b066-9d8ae09a77a2"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_city}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="570" y="0" width="116" height="20" uuid="2d4de131-aa13-4a12-b143-ebc28acc3b7c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2beaa58e-6c23-4c09-94a3-2aae1471b01e"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_state}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="686" y="0" width="116" height="20" uuid="c3dde7f4-e14d-48bc-b638-08519f34607c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3f89b534-c133-4939-884b-ff95b6a88183"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_country}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="742" height="13" backcolor="#E6E6E6" uuid="b6fda42c-35fb-4147-b21a-66c0283a7b8c"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="742" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="f17a2229-6513-4c42-9f8a-618325745391"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="c6e77d9a-6558-41cc-be46-0bef7cc92585"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

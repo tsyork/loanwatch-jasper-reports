@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JasperReports Development Tool</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>JasperReports Development Tool</h1>
+            <p class="subtitle">Select a report to run</p>
+        </header>
+
+        <main>
+            <section class="reports-section">
+                <div class="section-header">
+                    <h2>Available Reports</h2>
+                    <button type="button" class="btn btn-secondary" onclick="refreshReports()">
+                        Refresh List
+                    </button>
+                </div>
+
+                <div th:if="${#lists.isEmpty(reports)}" class="empty-state">
+                    <p>No reports found.</p>
+                    <p class="hint">Add JRXML files to <code>src/main/resources/reports/</code></p>
+                </div>
+
+                <ul class="report-list" th:unless="${#lists.isEmpty(reports)}">
+                    <li th:each="report : ${reports}" class="report-item">
+                        <a th:href="@{/report/{id}(id=${report.id})}" class="report-link">
+                            <span class="report-name" th:text="${report.displayName}">Report Name</span>
+                            <span class="report-meta">
+                                <span th:text="${#lists.size(report.parameters)} + ' parameter(s)'">0 parameters</span>
+                                <span class="separator">|</span>
+                                <span th:text="${report.fileName}">filename.jrxml</span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="datasources-section">
+                <h2>Data Sources</h2>
+                <div th:if="${#lists.isEmpty(dataSources)}" class="empty-state">
+                    <p>No data sources configured.</p>
+                    <p class="hint">Edit <code>datasources.properties</code> to add connections.</p>
+                </div>
+                <ul class="datasource-list" th:unless="${#lists.isEmpty(dataSources)}">
+                    <li th:each="ds : ${dataSources}" class="datasource-item" th:data-ds="${ds}">
+                        <span class="ds-name" th:text="${ds}">datasource</span>
+                        <button type="button" class="btn btn-small test-btn">
+                            Test
+                        </button>
+                        <span class="ds-status"></span>
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <p>JasperReports Development Tool</p>
+        </footer>
+    </div>
+
+    <script>
+        function refreshReports() {
+            fetch('/api/refresh', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    }
+                })
+                .catch(err => alert('Error refreshing: ' + err));
+        }
+
+        // Attach click handlers to test buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.test-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    const li = this.closest('.datasource-item');
+                    const name = li.dataset.ds;
+                    const statusEl = li.querySelector('.ds-status');
+
+                    statusEl.textContent = 'Testing...';
+                    statusEl.className = 'ds-status testing';
+
+                    fetch('/api/datasource/' + encodeURIComponent(name) + '/test')
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.connected) {
+                                statusEl.textContent = 'Connected';
+                                statusEl.className = 'ds-status connected';
+                            } else {
+                                statusEl.textContent = 'Failed';
+                                statusEl.className = 'ds-status failed';
+                            }
+                        })
+                        .catch(err => {
+                            statusEl.textContent = 'Error';
+                            statusEl.className = 'ds-status failed';
+                        });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+# Compiled class files
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Build directories
+target/
+build/
+out/
+
+# IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+.factorypath
+
+# Log files
+*.log
+logs/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Maven
+dependency-reduced-pom.xml
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Local configuration files (may contain passwords)
+.env
+application-local.properties
+datasources-local.properties
+*.local
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~.nib
+
+# Compiled JasperReports files (regenerated on demand)
+*.jasper
+
+# Prompt file (development only)
+prompt.txt

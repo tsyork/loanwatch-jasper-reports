@@ -1,0 +1,367 @@
+/* JasperReports Development Tool - Minimal Functional Styling */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    background: #f5f5f5;
+    color: #333;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    margin-bottom: 30px;
+}
+
+header h1 {
+    margin: 0 0 5px 0;
+    color: #1a1a1a;
+}
+
+.subtitle {
+    color: #666;
+    margin: 0;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* Sections */
+section {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+section h2 {
+    margin: 0 0 15px 0;
+    font-size: 1.2rem;
+    color: #1a1a1a;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.section-header h2 {
+    margin: 0;
+    border: none;
+    padding: 0;
+}
+
+/* Report List */
+.report-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.report-item {
+    border-bottom: 1px solid #eee;
+}
+
+.report-item:last-child {
+    border-bottom: none;
+}
+
+.report-link {
+    display: block;
+    padding: 15px 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.15s;
+}
+
+.report-link:hover {
+    background: #f8f8f8;
+}
+
+.report-name {
+    display: block;
+    font-weight: 500;
+    color: #0066cc;
+    margin-bottom: 3px;
+}
+
+.report-meta {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.report-meta .separator {
+    margin: 0 8px;
+}
+
+/* Data Sources */
+.datasource-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.datasource-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.datasource-item:last-child {
+    border-bottom: none;
+}
+
+.ds-name {
+    font-family: monospace;
+    background: #f0f0f0;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.ds-status {
+    margin-left: 10px;
+    font-size: 0.85rem;
+}
+
+.ds-status.testing {
+    color: #666;
+}
+
+.ds-status.connected {
+    color: #28a745;
+}
+
+.ds-status.failed {
+    color: #dc3545;
+}
+
+/* Forms */
+.form-section {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.param-type {
+    font-weight: normal;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.required {
+    color: #dc3545;
+}
+
+.form-control {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: white;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 0 0 2px rgba(0,102,204,0.2);
+}
+
+select.form-control {
+    cursor: pointer;
+}
+
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.form-checkbox {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+}
+
+.param-description {
+    margin: 5px 0 0 0;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.no-params {
+    color: #666;
+    font-style: italic;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.15s;
+}
+
+.btn-primary {
+    background: #0066cc;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #0052a3;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+.btn-small {
+    padding: 4px 10px;
+    font-size: 0.85rem;
+}
+
+.form-actions {
+    margin-top: 20px;
+}
+
+/* Data Source Section Highlight */
+.datasource-section {
+    background: #f8f9fa;
+    border: 2px solid #dee2e6;
+}
+
+.datasource-section h2 {
+    color: #495057;
+}
+
+/* Empty States */
+.empty-state {
+    text-align: center;
+    padding: 30px;
+    color: #666;
+}
+
+.empty-state .hint {
+    font-size: 0.9rem;
+}
+
+.empty-state code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9rem;
+}
+
+/* Error Box */
+.error-box {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    border-left: 4px solid #dc3545;
+}
+
+.error-message {
+    font-size: 1.1rem;
+    color: #dc3545;
+    margin: 0 0 20px 0;
+}
+
+.hints {
+    background: #fff3cd;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.hints h3 {
+    margin: 0 0 10px 0;
+    color: #856404;
+    font-size: 1rem;
+}
+
+.hints ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.hints li {
+    margin-bottom: 5px;
+}
+
+/* Footer */
+footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+    }
+
+    .form-control {
+        max-width: 100%;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}

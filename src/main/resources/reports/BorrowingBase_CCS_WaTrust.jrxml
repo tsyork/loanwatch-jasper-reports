@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 7.9.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BorrowingBase_CCS_WaTrust" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5f497677-6d64-496a-b183-3f109c91339c">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="LoanWatch Demo DB"/>
+	<parameter name="AsOfDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA["9/30/25"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="borrower_fk" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[153]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM analytics.get_borrowing_base_data($P{AsOfDate}::DATE, $P{borrower_fk})]]>
+	</queryString>
+	<field name="ar_previous_balance" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ar_previous_balance"/>
+		<property name="com.jaspersoft.studio.field.label" value="ar_previous_balance"/>
+	</field>
+	<field name="ar_new_sales" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ar_new_sales"/>
+		<property name="com.jaspersoft.studio.field.label" value="ar_new_sales"/>
+	</field>
+	<field name="ar_other_additions" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ar_other_additions"/>
+		<property name="com.jaspersoft.studio.field.label" value="ar_other_additions"/>
+	</field>
+	<field name="ar_total_additions" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ar_total_additions"/>
+		<property name="com.jaspersoft.studio.field.label" value="ar_total_additions"/>
+	</field>
+	<field name="ar_collections" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ar_collections"/>
+		<property name="com.jaspersoft.studio.field.label" value="ar_collections"/>
+	</field>
+	<field name="ar_other_deductions" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ar_other_deductions"/>
+		<property name="com.jaspersoft.studio.field.label" value="ar_other_deductions"/>
+	</field>
+	<field name="ar_total_deductions" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ar_total_deductions"/>
+		<property name="com.jaspersoft.studio.field.label" value="ar_total_deductions"/>
+	</field>
+	<field name="ar_current_balance" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ar_current_balance"/>
+		<property name="com.jaspersoft.studio.field.label" value="ar_current_balance"/>
+	</field>
+	<field name="ar_ineligibles_delinquent" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ar_ineligibles_delinquent"/>
+		<property name="com.jaspersoft.studio.field.label" value="ar_ineligibles_delinquent"/>
+	</field>
+	<field name="ar_ineligibles_aged_credits" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ar_ineligibles_aged_credits"/>
+		<property name="com.jaspersoft.studio.field.label" value="ar_ineligibles_aged_credits"/>
+	</field>
+	<field name="ar_ineligibles_concentration" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ar_ineligibles_concentration"/>
+		<property name="com.jaspersoft.studio.field.label" value="ar_ineligibles_concentration"/>
+	</field>
+	<field name="ar_ineligibles_cross_aging" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ar_ineligibles_cross_aging"/>
+		<property name="com.jaspersoft.studio.field.label" value="ar_ineligibles_cross_aging"/>
+	</field>
+	<field name="ar_ineligibles_cod" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ar_ineligibles_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="ar_ineligibles_cod"/>
+	</field>
+	<field name="ar_ineligibles_foreign" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ar_ineligibles_foreign"/>
+		<property name="com.jaspersoft.studio.field.label" value="ar_ineligibles_foreign"/>
+	</field>
+	<field name="ar_ineligibles_contra" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ar_ineligibles_contra"/>
+		<property name="com.jaspersoft.studio.field.label" value="ar_ineligibles_contra"/>
+	</field>
+	<field name="ar_ineligibles_affiliate" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ar_ineligibles_affiliate"/>
+		<property name="com.jaspersoft.studio.field.label" value="ar_ineligibles_affiliate"/>
+	</field>
+	<field name="ar_ineligibles_consignment" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ar_ineligibles_consignment"/>
+		<property name="com.jaspersoft.studio.field.label" value="ar_ineligibles_consignment"/>
+	</field>
+	<field name="ar_ineligibles_government" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ar_ineligibles_government"/>
+		<property name="com.jaspersoft.studio.field.label" value="ar_ineligibles_government"/>
+	</field>
+	<field name="ar_ineligibles_boeing_delinquent" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ar_ineligibles_boeing_delinquent"/>
+		<property name="com.jaspersoft.studio.field.label" value="ar_ineligibles_boeing_delinquent"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="300" height="18" uuid="8a3f5e3d-1b2c-4f5e-9d8f-7c6e5d4a3b2c"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Washington Trust Bank]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="0" width="190" height="10" uuid="bb1a2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BORROWING BASE CERTIFICATE #:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="520" y="0" width="52" height="10" uuid="cc2b3d4e-5f6a-7b8c-9d0e-1f2a3b4c5d6e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[21]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="10" width="242" height="10" uuid="dd3c4e5f-6a7b-8c9d-0e1f-2a3b4c5d6e7f"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Accounts Receivable and/or Inventory]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="20" width="70" height="10" uuid="ee4d5f6a-7b8c-9d0e-1f2a-3b4c5d6e7f8a"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[As of (date):]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="520" y="20" width="52" height="10" uuid="ff5e6f7a-8b9c-0d1e-2f3a-4b5c6d7e8f9a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{AsOfDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="270" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="5" width="572" height="12" uuid="aa1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d"/>
+				<textElement textAlignment="Left">
+					<font size="9" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ACCOUNTS RECEIVABLE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="15" height="10" uuid="1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[1.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="20" width="345" height="10" uuid="2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Previous balance of accounts:  (line 8, previous report)]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="472" y="20" width="100" height="10" uuid="3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ar_previous_balance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="32" width="15" height="10" uuid="4d5e6f7a-8b9c-0d1e-2f3a-4b5c6d7e8f9a"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[2.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="32" width="245" height="10" uuid="5e6f7a8b-9c0d-1e2f-3a4b-5c6d7e8f9a0b"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Plus:  New sales as posted through:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="260" y="32" width="50" height="10" uuid="6f7a8b9c-0d1e-2f3a-4b5c-6d7e8f9a0b1c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{AsOfDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="310" y="32" width="80" height="10" uuid="7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[(date;mm/dd/yr)]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="390" y="32" width="82" height="10" uuid="8b9c0d1e-2f3a-4b5c-6d7e-8f9a0b1c2d3e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ar_new_sales}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="44" width="15" height="10" uuid="9c0d1e2f-3a4b-5c6d-7e8f-9a0b1c2d3e4f"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[3.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="44" width="345" height="10" uuid="0d1e2f3a-4b5c-6d7e-8f9a-0b1c2d3e4f5a"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Plus:  Other additions (debit adjustments, etc.)]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="390" y="44" width="82" height="10" uuid="1e2f3a4b-5c6d-7e8f-9a0b-1c2d3e4f5a6b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ar_other_additions}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="56" width="15" height="10" uuid="2f3a4b5c-6d7e-8f9a-0b1c-2d3e4f5a6b7c"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[4.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="56" width="345" height="10" uuid="3a4b5c6d-7e8f-9a0b-1c2d-3e4f5a6b7c8d"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Total Additions:  (Line 2 + Line 3):]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="472" y="56" width="100" height="10" uuid="4b5c6d7e-8f9a-0b1c-2d3e-4f5a6b7c8d9e"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ar_total_additions}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="68" width="15" height="10" uuid="5c6d7e8f-9a0b-1c2d-3e4f-5a6b7c8d9e0f"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[5.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="68" width="245" height="10" uuid="6d7e8f9a-0b1c-2d3e-4f5a-6b7c8d9e0f1a"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Less:  Collections as posted through:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="260" y="68" width="50" height="10" uuid="7e8f9a0b-1c2d-3e4f-5a6b-7c8d9e0f1a2b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{AsOfDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="310" y="68" width="80" height="10" uuid="8f9a0b1c-2d3e-4f5a-6b7c-8d9e0f1a2b3c"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[(date;mm/dd/yr)]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="390" y="68" width="82" height="10" uuid="9a0b1c2d-3e4f-5a6b-7c8d-9e0f1a2b3c4d"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ar_collections}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="80" width="15" height="10" uuid="0b1c2d3e-4f5a-6b7c-8d9e-0f1a2b3c4d5e"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[6.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="80" width="345" height="10" uuid="1c2d3e4f-5a6b-7c8d-9e0f-1a2b3c4d5e6f"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Less:  Credit memos, discounts, credit adjustments, etc.]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="390" y="80" width="82" height="10" uuid="2d3e4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ar_other_deductions}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="92" width="15" height="10" uuid="3e4f5a6b-7c8d-9e0f-1a2b-3c4d5e6f7a8b"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[7.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="92" width="345" height="10" uuid="4f5a6b7c-8d9e-0f1a-2b3c-4d5e6f7a8b9c"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Total Deductions:  (Line 5 + Line 6)]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="472" y="92" width="100" height="10" uuid="5a6b7c8d-9e0f-1a2b-3c4d-5e6f7a8b9c0d"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ar_total_deductions}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="104" width="15" height="10" uuid="6b7c8d9e-0f1a-2b3c-4d5e-6f7a8b9c0d1e"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[8.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="104" width="345" height="10" uuid="7c8d9e0f-1a2b-3c4d-5e6f-7a8b9c0d1e2f"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Present balance of accounts:]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="472" y="104" width="100" height="10" uuid="8d9e0f1a-2b3c-4d5e-6f7a-8b9c0d1e2f3a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ar_current_balance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="116" width="15" height="10" uuid="9e0f1a2b-3c4d-5e6f-7a8b-9c0d1e2f3a4b"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[9.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="116" width="245" height="10" uuid="0f1a2b3c-4d5e-6f7a-8b9c-0d1e2f3a4b5c"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Less:  Ineligible Accounts (per loan agreement) as of:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="260" y="116" width="50" height="10" uuid="1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{AsOfDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="310" y="116" width="80" height="10" uuid="2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[(date;mm/dd/yr)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="128" width="30" height="10" uuid="3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[a.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="128" width="180" height="10" uuid="4d5e6f7a-8b9c-0d1e-2f3a-4b5c6d7e8f9a"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Amounts aged over]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="225" y="128" width="50" height="10" uuid="5e6f7a8b-9c0d-1e2f-3a4b-5c6d7e8f9a0b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[90 Days]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="128" width="30" height="10" uuid="6f7a8b9c-0d1e-2f3a-4b5c-6d7e8f9a0b1c"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[/ADI]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="390" y="128" width="82" height="10" uuid="7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ar_ineligibles_delinquent}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="45" y="140" width="30" height="10" uuid="8b9c0d1e-2f3a-4b5c-6d7e-8f9a0b1c2d3e"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[i.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="75" y="140" width="200" height="10" uuid="9c0d1e2f-3a4b-5c6d-7e8f-9a0b1c2d3e4f"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Plus adj. For Unapplied Credits aged over]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="140" width="30" height="10" uuid="0d1e2f3a-4b5c-6d7e-8f9a-0b1c2d3e4f5a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="305" y="140" width="30" height="10" uuid="1e2f3a4b-5c6d-7e8f-9a0b-1c2d3e4f5a6b"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[days]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="390" y="140" width="82" height="10" uuid="2f3a4b5c-6d7e-8f9a-0b1c-2d3e4f5a6b7c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ar_ineligibles_aged_credits}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="152" width="30" height="10" uuid="3a4b5c6d-7e8f-9a0b-1c2d-3e4f5a6b7c8d"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[b.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="152" width="150" height="10" uuid="4b5c6d7e-8f9a-0b1c-2d3e-4f5a6b7c8d9e"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Concentrations in excess of]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="195" y="152" width="40" height="10" uuid="5c6d7e8f-9a0b-1c2d-3e4f-5a6b7c8d9e0f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[25%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="235" y="152" width="130" height="10" uuid="6d7e8f9a-0b1c-2d3e-4f5a-6b7c8d9e0f1a"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[% of total receivables]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="390" y="152" width="82" height="10" uuid="7e8f9a0b-1c2d-3e4f-5a6b-7c8d9e0f1a2b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ar_ineligibles_concentration}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="45" y="162" width="420" height="10" uuid="8f9a0b1c-2d3e-4f5a-6b7c-8d9e0f1a2b3c"/>
+				<textElement textAlignment="Left">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(exclude approved exceptions as described in loan agreement - Boeing allowed up to 50%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="174" width="30" height="10" uuid="9a0b1c2d-3e4f-5a6b-7c8d-9e0f1a2b3c4d"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[c.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="174" width="150" height="10" uuid="0b1c2d3e-4f5a-6b7c-8d9e-0f1a2b3c4d5e"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Remainders/Cross-aging of]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="195" y="174" width="40" height="10" uuid="1c2d3e4f-5a6b-7c8d-9e0f-1a2b3c4d5e6f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[25%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="235" y="174" width="20" height="10" uuid="2d3e4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="390" y="174" width="82" height="10" uuid="3e4f5a6b-7c8d-9e0f-1a2b-3c4d5e6f7a8b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ar_ineligibles_cross_aging}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="186" width="30" height="10" uuid="4f5a6b7c-8d9e-0f1a-2b3c-4d5e6f7a8b9c"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[d.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="186" width="345" height="10" uuid="5a6b7c8d-9e0f-1a2b-3c4d-5e6f7a8b9c0d"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[COD/Cash Sales Accounts]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="390" y="186" width="82" height="10" uuid="6b7c8d9e-0f1a-2b3c-4d5e-6f7a8b9c0d1e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ar_ineligibles_cod}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="198" width="30" height="10" uuid="7c8d9e0f-1a2b-3c4d-5e6f-7a8b9c0d1e2f"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[e.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="198" width="345" height="10" uuid="8d9e0f1a-2b3c-4d5e-6f7a-8b9c0d1e2f3a"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Foreign Accounts]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="390" y="198" width="82" height="10" uuid="9e0f1a2b-3c4d-5e6f-7a8b-9c0d1e2f3a4b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ar_ineligibles_foreign}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="210" width="30" height="10" uuid="0f1a2b3c-4d5e-6f7a-8b9c-0d1e2f3a4b5c"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[f.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="210" width="345" height="10" uuid="1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Contra/Potential offset Accounts]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="390" y="210" width="82" height="10" uuid="2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ar_ineligibles_contra}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="222" width="30" height="10" uuid="3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[g.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="222" width="345" height="10" uuid="4d5e6f7a-8b9c-0d1e-2f3a-4b5c6d7e8f9a"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Affiliate/Employee/Shareholder Accounts]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="390" y="222" width="82" height="10" uuid="5e6f7a8b-9c0d-1e2f-3a4b-5c6d7e8f9a0b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ar_ineligibles_affiliate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="234" width="30" height="10" uuid="6f7a8b9c-0d1e-2f3a-4b5c-6d7e8f9a0b1c"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[h.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="234" width="345" height="10" uuid="7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Consignment/Bill & Hold/Guaranteed Sales Accounts]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="390" y="234" width="82" height="10" uuid="8b9c0d1e-2f3a-4b5c-6d7e-8f9a0b1c2d3e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ar_ineligibles_consignment}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="246" width="30" height="10" uuid="9c0d1e2f-3a4b-5c6d-7e8f-9a0b1c2d3e4f"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[i.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="246" width="345" height="10" uuid="0d1e2f3a-4b5c-6d7e-8f9a-0b1c2d3e4f5a"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[U.S. Government Accounts (see Assignment of Claims Act)]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="390" y="246" width="82" height="10" uuid="1e2f3a4b-5c6d-7e8f-9a0b-1c2d3e4f5a6b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ar_ineligibles_government}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="258" width="30" height="10" uuid="2f3a4b5c-6d7e-8f9a-0b1c-2d3e4f5a6b7c"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[j.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="258" width="345" height="10" uuid="3a4b5c6d-7e8f-9a0b-1c2d-3e4f5a6b7c8d"/>
+				<textElement textAlignment="Left">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Other: Boeing aged over 135 ADI]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="390" y="258" width="82" height="10" uuid="4b5c6d7e-8f9a-0b1c-2d3e-4f5a6b7c8d9e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ar_ineligibles_boeing_delinquent}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

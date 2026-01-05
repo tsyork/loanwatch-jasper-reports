@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - JasperReports</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="/" class="back-link">&larr; Back to Reports</a>
+            <h1>Error</h1>
+        </header>
+
+        <main>
+            <div class="error-box">
+                <p class="error-message" th:text="${error}">An error occurred</p>
+
+                <div class="hints">
+                    <h3>What you can try:</h3>
+                    <ul>
+                        <li>Check that the report file exists in the reports folder</li>
+                        <li>Verify the JRXML file has valid syntax</li>
+                        <li>Ensure all required parameters are defined</li>
+                        <li>Check application logs for more details</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>JasperReports Development Tool</p>
+        </footer>
+    </div>
+</body>
+</html>
