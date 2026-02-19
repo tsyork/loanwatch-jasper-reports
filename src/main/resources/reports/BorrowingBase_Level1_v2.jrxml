@@ -12,6 +12,9 @@
 	<parameter name="logoPath" class="java.lang.String">
 		<defaultValueExpression><![CDATA["WashingtonTrustBankLogo_cropped.png"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="IMAGES_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
 	<queryString language="SQL">
 		<![CDATA[SELECT h.*, c.*
 FROM analytics.get_level1_bb_header($P{AsOfDate}::DATE, $P{borrower_fk}) h
@@ -123,7 +126,7 @@ CROSS JOIN (
 			</staticText>
 			<image scaleImage="RetainShape" hAlign="Right" vAlign="Top">
 				<reportElement x="322" y="0" width="250" height="32" uuid="b1a20001-0001-0001-0001-000000000002"/>
-				<imageExpression><![CDATA[$P{logoPath}]]></imageExpression>
+				<imageExpression><![CDATA[$P{IMAGES_DIR} + $P{logoPath}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="14" width="300" height="12" uuid="b1a20001-0001-0001-0001-000000000003"/>
