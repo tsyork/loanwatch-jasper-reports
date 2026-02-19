@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 7.9.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AR_Ineligible_Detail" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="adfab3ef-fc9e-4345-a962-cc203057fc21">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="LoanWatch Demo DB"/>
+	<parameter name="AsOfDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA["3/31/24"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="borrower_fk" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[89]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ar_collateral_fk" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[69]]></defaultValueExpression>
+	</parameter>
+	<parameter name="use_reporting_currency" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[Boolean.TRUE]]></defaultValueExpression>
+	</parameter>
+	<parameter name="logoPath" class="java.lang.String">
+		<defaultValueExpression><![CDATA["WashingtonTrustBankLogo_cropped.png"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="IMAGES_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT *
+FROM analytics.get_ar_ineligible_detail(
+    $P{AsOfDate}::DATE,
+    $P{borrower_fk},
+    $P{ar_collateral_fk},
+    $P{use_reporting_currency}
+)]]>
+	</queryString>
+	<field name="borrower_name" class="java.lang.String"/>
+	<field name="collateral_name" class="java.lang.String"/>
+	<field name="as_of_date" class="java.sql.Date"/>
+	<field name="currency_symbol" class="java.lang.String"/>
+	<field name="currency_code" class="java.lang.String"/>
+	<field name="inelig_code" class="java.lang.String"/>
+	<field name="inelig_description" class="java.lang.String"/>
+	<field name="inelig_order" class="java.lang.Integer"/>
+	<field name="limit_pct" class="java.math.BigDecimal"/>
+	<field name="has_cap" class="java.lang.Boolean"/>
+	<field name="cap_type" class="java.lang.String"/>
+	<field name="cap_amount" class="java.math.BigDecimal"/>
+	<field name="raw_inelig_total" class="java.math.BigDecimal"/>
+	<field name="add_back" class="java.math.BigDecimal"/>
+	<field name="net_inelig_total" class="java.math.BigDecimal"/>
+	<field name="customer_id" class="java.lang.String"/>
+	<field name="customer_name" class="java.lang.String"/>
+	<field name="gross_ar" class="java.math.BigDecimal"/>
+	<field name="past_due" class="java.math.BigDecimal"/>
+	<field name="ineligible_amount" class="java.math.BigDecimal"/>
+	<variable name="grp_gross_ar_sum" class="java.math.BigDecimal" resetType="Group" resetGroup="IneligGroup" calculation="Sum">
+		<variableExpression><![CDATA[$F{gross_ar}]]></variableExpression>
+	</variable>
+	<variable name="grp_past_due_sum" class="java.math.BigDecimal" resetType="Group" resetGroup="IneligGroup" calculation="Sum">
+		<variableExpression><![CDATA[$F{past_due}]]></variableExpression>
+	</variable>
+	<variable name="grp_inelig_sum" class="java.math.BigDecimal" resetType="Group" resetGroup="IneligGroup" calculation="Sum">
+		<variableExpression><![CDATA[$F{ineligible_amount}]]></variableExpression>
+	</variable>
+	<group name="IneligGroup">
+		<groupExpression><![CDATA[$F{inelig_code}]]></groupExpression>
+		<groupHeader>
+			<band height="32">
+				<rectangle>
+					<reportElement mode="Opaque" x="0" y="0" width="572" height="32" backcolor="#D1E1EB" uuid="01e8cddf-a71d-48d7-93b8-80111716a9db"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement mode="Transparent" x="0" y="2" width="350" height="14" uuid="ed778d2f-d9f3-441f-9701-91d8e99cb0b2"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{inelig_description}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Transparent" x="0" y="18" width="190" height="12" uuid="b51a556c-c4b0-4899-ba6d-fa0a916114e2"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="190" y="18" width="100" height="12" uuid="b1e22286-028c-45cc-8110-97e8af6bec73"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="300" y="18" width="90" height="12" uuid="8ba95a68-38b5-4c8b-81f7-eae3b4207d2f"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Past Due]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="405" y="18" width="95" height="12" uuid="dd4083dc-750e-4d13-b328-0fc055cc3fbb"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Ineligible]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="505" y="18" width="67" height="12" uuid="80d730a7-7ff7-4bb2-b821-f378eefbbb81">
+						<printWhenExpression><![CDATA[$F{limit_pct} != null]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Limit]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="48">
+				<staticText>
+					<reportElement x="140" y="2" width="45" height="13" uuid="b38fa925-f075-41f5-9b84-d1a4bbc1c648"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="7"/>
+					</textElement>
+					<text><![CDATA[Totals]]></text>
+				</staticText>
+				<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+					<reportElement x="190" y="2" width="100" height="13" uuid="75b9ab17-f7a0-4dd1-b0a1-da54ce245575"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{grp_gross_ar_sum}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+					<reportElement x="300" y="2" width="90" height="13" uuid="442a54c2-d64c-4c6f-bf1e-6473fa505c07"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{grp_past_due_sum}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="405" y="2" width="95" height="13" backcolor="#F2F2F2" uuid="2360b8ff-10a0-4d2b-97f6-ed382f7b9506"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{grp_inelig_sum}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="505" y="2" width="67" height="13" uuid="d0540399-dcef-459c-bc23-1ac4de7b5822">
+						<printWhenExpression><![CDATA[!$F{has_cap}]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="6" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[Ineligible Amount]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="115" y="20" width="75" height="12" uuid="83365e63-938c-4133-ab68-0a7d0e1735fd">
+						<printWhenExpression><![CDATA[$F{has_cap}]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="6" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cap Amount]]></text>
+				</staticText>
+				<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+					<reportElement x="190" y="20" width="100" height="12" uuid="5526c06a-9d8b-465d-9184-5764be5843ec">
+						<printWhenExpression><![CDATA[$F{has_cap}]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="6" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cap_amount}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="295" y="20" width="80" height="12" uuid="dea618b8-1745-4a86-b202-bc140d7b78d7">
+						<printWhenExpression><![CDATA[$F{has_cap}]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="6" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Ineligible]]></text>
+				</staticText>
+				<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+					<reportElement x="375" y="20" width="60" height="12" uuid="643566b1-58f1-46a8-9a0e-4419cf6d148d">
+						<printWhenExpression><![CDATA[$F{has_cap}]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="6" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{raw_inelig_total}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="435" y="20" width="40" height="12" uuid="fad5c046-8467-40ce-82d4-c9c74b04149f">
+						<printWhenExpression><![CDATA[$F{has_cap}]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="6" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Add Back]]></text>
+				</staticText>
+				<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+					<reportElement x="475" y="20" width="55" height="12" uuid="1c785296-8a28-4a57-a60d-eec0e0a64534">
+						<printWhenExpression><![CDATA[$F{has_cap}]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="6" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{add_back} != null ? $F{add_back}.negate() : null]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="405" y="34" width="95" height="12" backcolor="#F2F2F2" uuid="55ac2111-d392-4cd1-8f8d-3b704633acb6">
+						<printWhenExpression><![CDATA[$F{has_cap}]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{net_inelig_total}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="505" y="34" width="67" height="12" uuid="a495af3c-2db2-4b5b-b456-63a4312b376f">
+						<printWhenExpression><![CDATA[$F{has_cap}]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="6" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[Ineligible Amount]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="73" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="300" height="14" uuid="61b6ae9d-512a-4254-910b-8f761e3ac611"/>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Collateral Analysis - AR Ineligible Details]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="14" width="300" height="12" uuid="21e20061-4995-4a95-9a11-567ce7be954e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Collateral Report - Monitoring]]></text>
+			</staticText>
+			<image scaleImage="RetainShape" hAlign="Right" vAlign="Top">
+				<reportElement x="322" y="0" width="250" height="32" uuid="4e746f4b-f714-4b64-9c73-060564bcc879"/>
+				<imageExpression><![CDATA[$P{IMAGES_DIR} + $P{logoPath}]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="33" width="572" height="1" uuid="bde5d0c0-85a7-461b-a987-7cb23d5591e5"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="37" width="60" height="11" uuid="3a8d38fd-5965-4404-8336-1541e491d684"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Borrower:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="60" y="37" width="200" height="11" uuid="38c4e82b-ceac-49e8-8d0e-5d8ad1e050f3"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{borrower_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="340" y="37" width="80" height="11" uuid="7b29e9f3-e263-409c-906b-73701f85c7a4"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Report Date:]]></text>
+			</staticText>
+			<textField pattern="MM/dd/yy" isBlankWhenNull="true">
+				<reportElement x="425" y="37" width="80" height="11" uuid="a80989bc-2021-4a0a-88b0-e58c286d05b0"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{as_of_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="48" width="60" height="11" uuid="209003fd-2722-488d-90f8-3d79bffea4a1"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Collateral:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="60" y="48" width="200" height="11" uuid="4c87aa01-0001-0001-0001-000000000001"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{collateral_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="340" y="48" width="80" height="11" uuid="4c87aa01-0001-0001-0001-000000000002"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Currency:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="425" y="48" width="80" height="11" uuid="4c87aa01-0001-0001-0001-000000000003"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{currency_code}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="63" width="572" height="1" uuid="4c87aa01-0001-0001-0001-000000000004"/>
+			</line>
+		</band>
+	</title>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="190" height="13" uuid="93388b4b-d335-4dc2-9ff5-154cf4e372d0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement x="190" y="0" width="100" height="13" uuid="2ee7fa07-3731-4420-b1fb-43267313d506"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gross_ar}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement x="300" y="0" width="90" height="13" uuid="b8b626ff-95d9-4e9a-8c8f-8dbdd13876ea"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{past_due}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement x="405" y="0" width="95" height="13" uuid="d55bdb10-060b-44a1-840b-fa1694414364"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ineligible_amount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement x="505" y="0" width="67" height="13" uuid="7e6e4bc2-b592-4b5b-a458-5289d7ffae00">
+					<printWhenExpression><![CDATA[$F{limit_pct} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{limit_pct}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="18">
+			<textField>
+				<reportElement x="0" y="4" width="572" height="12" uuid="d37439aa-6668-4bdd-b5c9-04f2af67298b"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
