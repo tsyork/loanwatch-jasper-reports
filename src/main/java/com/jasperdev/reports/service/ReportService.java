@@ -67,11 +67,20 @@ public class ReportService {
             log.warn("Could not create temp directory: {}", e.getMessage());
         }
 
-        // Check for filesystem reports folder (development mode)
-        Path devPath = Path.of("src/main/resources/reports");
-        if (Files.isDirectory(devPath)) {
-            filesystemReportsPath = devPath;
-            log.info("Development mode: scanning filesystem at {}", devPath.toAbsolutePath());
+        // Check for filesystem reports folder (development mode only)
+        // Skip filesystem scanning if running on Railway or other production environments
+        String railwayEnv = System.getenv("RAILWAY_ENVIRONMENT");
+        String port = System.getenv("PORT");
+        boolean isProduction = railwayEnv != null || (port != null && !port.equals("8080"));
+
+        if (!isProduction) {
+            Path devPath = Path.of("src/main/resources/reports");
+            if (Files.isDirectory(devPath)) {
+                filesystemReportsPath = devPath;
+                log.info("Development mode: scanning filesystem at {}", devPath.toAbsolutePath());
+            }
+        } else {
+            log.info("Production mode: scanning classpath for reports");
         }
 
         // Initial scan for reports
