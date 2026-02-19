@@ -1,0 +1,1801 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 7.9.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BorrowingBase_Level1" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="LoanWatch Demo DB"/>
+	<parameter name="AsOfDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA["8/31/25"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="borrower_fk" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[122]]></defaultValueExpression>
+	</parameter>
+	<parameter name="logoPath" class="java.lang.String">
+		<defaultValueExpression><![CDATA["WashingtonTrustBankLogo_cropped.png"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT h.*, c.*
+FROM analytics.get_level1_bb_header($P{AsOfDate}::DATE, $P{borrower_fk}) h
+CROSS JOIN (
+    SELECT * FROM analytics.get_level1_borrowing_base($P{AsOfDate}::DATE, $P{borrower_fk})
+    UNION ALL
+    SELECT * FROM analytics.get_level1_inventory_base($P{AsOfDate}::DATE, $P{borrower_fk})
+    ORDER BY section_type, section_number
+) c]]>
+	</queryString>
+	<field name="borrower_name" class="java.lang.String"/>
+	<field name="dba_name" class="java.lang.String"/>
+	<field name="relationship_mgr" class="java.lang.String"/>
+	<field name="cbc_code" class="java.lang.String"/>
+	<field name="cost_center" class="java.lang.String"/>
+	<field name="industry" class="java.lang.String"/>
+	<field name="risk_rating" class="java.lang.String"/>
+	<field name="report_date" class="java.sql.Date"/>
+	<field name="focal_date" class="java.sql.Date"/>
+	<field name="maturity_date" class="java.sql.Date"/>
+	<field name="loc_amount" class="java.math.BigDecimal"/>
+	<field name="bb_packages_required" class="java.lang.String"/>
+	<field name="cash_monitoring" class="java.lang.String"/>
+	<field name="ar_advance_rate" class="java.math.BigDecimal"/>
+	<field name="inv_advance_rate" class="java.math.BigDecimal"/>
+	<field name="eligibility_period" class="java.lang.String"/>
+	<field name="inv_sublimit" class="java.math.BigDecimal"/>
+	<field name="other_cap" class="java.math.BigDecimal"/>
+	<field name="less_reserves" class="java.math.BigDecimal"/>
+	<field name="exceptions_note" class="java.lang.String"/>
+	<field name="calc_total_bb" class="java.math.BigDecimal"/>
+	<field name="cust_total_bb" class="java.math.BigDecimal"/>
+	<field name="approved_loc" class="java.math.BigDecimal"/>
+	<field name="calc_lesser_bb_or_loc" class="java.math.BigDecimal"/>
+	<field name="cust_lesser_bb_or_loc" class="java.math.BigDecimal"/>
+	<field name="loc_balance" class="java.math.BigDecimal"/>
+	<field name="lc_balance" class="java.math.BigDecimal"/>
+	<field name="calc_availability" class="java.math.BigDecimal"/>
+	<field name="cust_availability" class="java.math.BigDecimal"/>
+	<field name="section_type" class="java.lang.String"/>
+	<field name="section_number" class="java.lang.Integer"/>
+	<field name="section_label" class="java.lang.String"/>
+	<field name="calc_total" class="java.math.BigDecimal"/>
+	<field name="cust_total" class="java.math.BigDecimal"/>
+	<field name="inelig_1_label" class="java.lang.String"/>
+	<field name="inelig_1_calc" class="java.math.BigDecimal"/>
+	<field name="inelig_1_cust" class="java.math.BigDecimal"/>
+	<field name="inelig_2_label" class="java.lang.String"/>
+	<field name="inelig_2_calc" class="java.math.BigDecimal"/>
+	<field name="inelig_2_cust" class="java.math.BigDecimal"/>
+	<field name="inelig_3_label" class="java.lang.String"/>
+	<field name="inelig_3_calc" class="java.math.BigDecimal"/>
+	<field name="inelig_3_cust" class="java.math.BigDecimal"/>
+	<field name="inelig_4_label" class="java.lang.String"/>
+	<field name="inelig_4_calc" class="java.math.BigDecimal"/>
+	<field name="inelig_4_cust" class="java.math.BigDecimal"/>
+	<field name="inelig_5_label" class="java.lang.String"/>
+	<field name="inelig_5_calc" class="java.math.BigDecimal"/>
+	<field name="inelig_5_cust" class="java.math.BigDecimal"/>
+	<field name="inelig_6_label" class="java.lang.String"/>
+	<field name="inelig_6_calc" class="java.math.BigDecimal"/>
+	<field name="inelig_6_cust" class="java.math.BigDecimal"/>
+	<field name="inelig_7_label" class="java.lang.String"/>
+	<field name="inelig_7_calc" class="java.math.BigDecimal"/>
+	<field name="inelig_7_cust" class="java.math.BigDecimal"/>
+	<field name="inelig_8_label" class="java.lang.String"/>
+	<field name="inelig_8_calc" class="java.math.BigDecimal"/>
+	<field name="inelig_8_cust" class="java.math.BigDecimal"/>
+	<field name="inelig_9_label" class="java.lang.String"/>
+	<field name="inelig_9_calc" class="java.math.BigDecimal"/>
+	<field name="inelig_9_cust" class="java.math.BigDecimal"/>
+	<field name="inelig_10_label" class="java.lang.String"/>
+	<field name="inelig_10_calc" class="java.math.BigDecimal"/>
+	<field name="inelig_10_cust" class="java.math.BigDecimal"/>
+	<field name="inelig_11_label" class="java.lang.String"/>
+	<field name="inelig_11_calc" class="java.math.BigDecimal"/>
+	<field name="inelig_11_cust" class="java.math.BigDecimal"/>
+	<field name="inelig_12_label" class="java.lang.String"/>
+	<field name="inelig_12_calc" class="java.math.BigDecimal"/>
+	<field name="inelig_12_cust" class="java.math.BigDecimal"/>
+	<field name="inelig_13_label" class="java.lang.String"/>
+	<field name="inelig_13_calc" class="java.math.BigDecimal"/>
+	<field name="inelig_13_cust" class="java.math.BigDecimal"/>
+	<field name="inelig_14_label" class="java.lang.String"/>
+	<field name="inelig_14_calc" class="java.math.BigDecimal"/>
+	<field name="inelig_14_cust" class="java.math.BigDecimal"/>
+	<field name="inelig_15_label" class="java.lang.String"/>
+	<field name="inelig_15_calc" class="java.math.BigDecimal"/>
+	<field name="inelig_15_cust" class="java.math.BigDecimal"/>
+	<field name="calc_total_ineligibles" class="java.math.BigDecimal"/>
+	<field name="cust_total_ineligibles" class="java.math.BigDecimal"/>
+	<field name="calc_eligible" class="java.math.BigDecimal"/>
+	<field name="cust_eligible" class="java.math.BigDecimal"/>
+	<field name="calc_advance_rate" class="java.math.BigDecimal"/>
+	<field name="cust_advance_rate" class="java.math.BigDecimal"/>
+	<field name="calc_borrowing_base" class="java.math.BigDecimal"/>
+	<field name="cust_borrowing_base" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="160" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="300" height="14" uuid="b1a20001-0001-0001-0001-000000000001"/>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Collateral Analysis - Borrowing Base]]></text>
+			</staticText>
+			<image scaleImage="RetainShape" hAlign="Right" vAlign="Top">
+				<reportElement x="322" y="0" width="250" height="32" uuid="b1a20001-0001-0001-0001-000000000002"/>
+				<imageExpression><![CDATA[$P{logoPath}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="14" width="300" height="12" uuid="b1a20001-0001-0001-0001-000000000003"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Collateral Report - Monitoring]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="33" width="572" height="1" uuid="b1a20001-0001-0001-0001-000000000004"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="37" width="55" height="11" uuid="b1a20001-0001-0001-0001-000000000005"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Borrower:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="55" y="37" width="180" height="11" uuid="b1a20001-0001-0001-0001-000000000006"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{borrower_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="340" y="37" width="80" height="11" uuid="b1a20001-0001-0001-0001-000000000007"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Report Date:]]></text>
+			</staticText>
+			<textField pattern="MM/dd/yy" isBlankWhenNull="true">
+				<reportElement x="425" y="37" width="80" height="11" uuid="b1a20001-0001-0001-0001-000000000008"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{report_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="48" width="55" height="11" uuid="b1a20001-0001-0001-0001-000000000009"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DBA:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="55" y="48" width="180" height="11" uuid="b1a20001-0001-0001-0001-000000000010"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dba_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="340" y="48" width="80" height="11" uuid="b1a20001-0001-0001-0001-000000000011"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Report Focal Date:]]></text>
+			</staticText>
+			<textField pattern="MM/dd/yy" isBlankWhenNull="true">
+				<reportElement x="425" y="48" width="80" height="11" uuid="b1a20001-0001-0001-0001-000000000012"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{focal_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="59" width="100" height="11" uuid="b1a20001-0001-0001-0001-000000000013"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relationship Mgr:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="59" width="80" height="11" uuid="b1a20001-0001-0001-0001-000000000014"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Maturity Date:]]></text>
+			</staticText>
+			<textField pattern="MM/dd/yy" isBlankWhenNull="true">
+				<reportElement x="425" y="59" width="80" height="11" uuid="b1a20001-0001-0001-0001-000000000015"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{maturity_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="340" y="70" width="80" height="11" uuid="b1a20001-0001-0001-0001-000000000016"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Risk Rating:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="84" width="572" height="1" uuid="b1a20001-0001-0001-0001-000000000017"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="87" width="200" height="12" uuid="b1a20001-0001-0001-0001-000000000018"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Credit Facility Parameters]]></text>
+			</staticText>
+			<textField pattern="$#,##0" isBlankWhenNull="true">
+				<reportElement x="0" y="100" width="70" height="11" uuid="b1a20001-0001-0001-0001-000000000019"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{loc_amount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="73" y="100" width="120" height="11" uuid="b1a20001-0001-0001-0001-000000000020"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Line of Credit Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="100" width="85" height="11" uuid="b1a20001-0001-0001-0001-000000000021"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[A/R Advance Rate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="100" width="85" height="11" uuid="b1a20001-0001-0001-0001-000000000022"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Eligibility Period]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="112" width="70" height="11" uuid="b1a20001-0001-0001-0001-000000000023"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bb_packages_required}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="73" y="112" width="120" height="11" uuid="b1a20001-0001-0001-0001-000000000024"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[BB Packages Required]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="112" width="100" height="11" uuid="b1a20001-0001-0001-0001-000000000025"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Inventory Advance Rate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="112" width="85" height="11" uuid="b1a20001-0001-0001-0001-000000000026"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Inventory Sublimit]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="124" width="70" height="11" uuid="b1a20001-0001-0001-0001-000000000027"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cash_monitoring}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="73" y="124" width="120" height="11" uuid="b1a20001-0001-0001-0001-000000000028"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Cash Monitoring]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="124" width="85" height="11" uuid="b1a20001-0001-0001-0001-000000000029"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Other:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="124" width="85" height="11" uuid="b1a20001-0001-0001-0001-000000000030"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Other Cap]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="136" width="85" height="11" uuid="b1a20001-0001-0001-0001-000000000031"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Less: Reserves]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="150" width="572" height="1" uuid="b1a20001-0001-0001-0001-000000000032"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="152" width="200" height="8" uuid="b1a20001-0001-0001-0001-000000000033"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COLLATERAL AVAILABILITY]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="14" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="200" height="12" backcolor="#D9E6F2" uuid="c1a20001-0001-0001-0001-000000000001"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  Category]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="200" y="0" width="110" height="12" backcolor="#D9E6F2" uuid="c1a20001-0001-0001-0001-000000000002"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Customer BBC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="310" y="0" width="110" height="12" backcolor="#D9E6F2" uuid="c1a20001-0001-0001-0001-000000000003"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Analyst]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="420" y="0" width="75" height="12" backcolor="#D9E6F2" uuid="c1a20001-0001-0001-0001-000000000004"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Variance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="495" y="0" width="77" height="12" backcolor="#D9E6F2" uuid="c1a20001-0001-0001-0001-000000000005"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Notes]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="260" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="2" width="300" height="11" forecolor="#2E75B6" uuid="d1a20001-0001-0001-0001-000000000001"/>
+				<textElement>
+					<font size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{section_label}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="15" width="190" height="10" uuid="d1a20001-0001-0001-0001-000000000002"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{section_type}.equals("AR") ? "    Total Accounts Receivable" : "    Total Inventory"]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement x="200" y="15" width="80" height="10" uuid="d1a20001-0001-0001-0001-000000000003"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement x="310" y="15" width="80" height="10" uuid="d1a20001-0001-0001-0001-000000000004"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{calc_total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement x="420" y="15" width="75" height="10" uuid="d1a20001-0001-0001-0001-000000000005"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{calc_total}.subtract($F{cust_total})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="27" width="200" height="10" uuid="d1a20001-0001-0001-0001-000000000006"/>
+				<textElement>
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Less:  Ineligibles]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="20" y="38" width="180" height="10" isRemoveLineWhenBlank="true" uuid="d1a20001-1001-0001-0001-000000000001">
+					<printWhenExpression><![CDATA[$F{inelig_1_label} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["     " + $F{inelig_1_label}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="200" y="38" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20001-1001-0001-0001-000000000002">
+					<printWhenExpression><![CDATA[$F{inelig_1_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_1_cust}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="280" y="38" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20001-1001-0001-0001-000000000003">
+					<printWhenExpression><![CDATA[$F{inelig_1_label} != null && $F{cust_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_1_cust}.divide($F{cust_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="310" y="38" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20001-1001-0001-0001-000000000004">
+					<printWhenExpression><![CDATA[$F{inelig_1_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_1_calc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="390" y="38" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20001-1001-0001-0001-000000000005">
+					<printWhenExpression><![CDATA[$F{inelig_1_label} != null && $F{calc_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_1_calc}.divide($F{calc_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="420" y="38" width="75" height="10" isRemoveLineWhenBlank="true" uuid="d1a20001-1001-0001-0001-000000000006">
+					<printWhenExpression><![CDATA[$F{inelig_1_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_1_cust}.subtract($F{inelig_1_calc})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="20" y="49" width="180" height="10" isRemoveLineWhenBlank="true" uuid="d1a20002-1001-0001-0001-000000000001">
+					<printWhenExpression><![CDATA[$F{inelig_2_label} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["     " + $F{inelig_2_label}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="200" y="49" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20002-1001-0001-0001-000000000002">
+					<printWhenExpression><![CDATA[$F{inelig_2_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_2_cust}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="280" y="49" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20002-1001-0001-0001-000000000003">
+					<printWhenExpression><![CDATA[$F{inelig_2_label} != null && $F{cust_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_2_cust}.divide($F{cust_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="310" y="49" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20002-1001-0001-0001-000000000004">
+					<printWhenExpression><![CDATA[$F{inelig_2_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_2_calc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="390" y="49" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20002-1001-0001-0001-000000000005">
+					<printWhenExpression><![CDATA[$F{inelig_2_label} != null && $F{calc_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_2_calc}.divide($F{calc_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="420" y="49" width="75" height="10" isRemoveLineWhenBlank="true" uuid="d1a20002-1001-0001-0001-000000000006">
+					<printWhenExpression><![CDATA[$F{inelig_2_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_2_cust}.subtract($F{inelig_2_calc})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="20" y="60" width="180" height="10" isRemoveLineWhenBlank="true" uuid="d1a20003-1001-0001-0001-000000000001">
+					<printWhenExpression><![CDATA[$F{inelig_3_label} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["     " + $F{inelig_3_label}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="200" y="60" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20003-1001-0001-0001-000000000002">
+					<printWhenExpression><![CDATA[$F{inelig_3_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_3_cust}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="280" y="60" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20003-1001-0001-0001-000000000003">
+					<printWhenExpression><![CDATA[$F{inelig_3_label} != null && $F{cust_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_3_cust}.divide($F{cust_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="310" y="60" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20003-1001-0001-0001-000000000004">
+					<printWhenExpression><![CDATA[$F{inelig_3_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_3_calc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="390" y="60" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20003-1001-0001-0001-000000000005">
+					<printWhenExpression><![CDATA[$F{inelig_3_label} != null && $F{calc_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_3_calc}.divide($F{calc_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="420" y="60" width="75" height="10" isRemoveLineWhenBlank="true" uuid="d1a20003-1001-0001-0001-000000000006">
+					<printWhenExpression><![CDATA[$F{inelig_3_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_3_cust}.subtract($F{inelig_3_calc})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="20" y="71" width="180" height="10" isRemoveLineWhenBlank="true" uuid="d1a20004-1001-0001-0001-000000000001">
+					<printWhenExpression><![CDATA[$F{inelig_4_label} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["     " + $F{inelig_4_label}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="200" y="71" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20004-1001-0001-0001-000000000002">
+					<printWhenExpression><![CDATA[$F{inelig_4_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_4_cust}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="280" y="71" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20004-1001-0001-0001-000000000003">
+					<printWhenExpression><![CDATA[$F{inelig_4_label} != null && $F{cust_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_4_cust}.divide($F{cust_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="310" y="71" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20004-1001-0001-0001-000000000004">
+					<printWhenExpression><![CDATA[$F{inelig_4_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_4_calc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="390" y="71" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20004-1001-0001-0001-000000000005">
+					<printWhenExpression><![CDATA[$F{inelig_4_label} != null && $F{calc_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_4_calc}.divide($F{calc_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="420" y="71" width="75" height="10" isRemoveLineWhenBlank="true" uuid="d1a20004-1001-0001-0001-000000000006">
+					<printWhenExpression><![CDATA[$F{inelig_4_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_4_cust}.subtract($F{inelig_4_calc})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="20" y="82" width="180" height="10" isRemoveLineWhenBlank="true" uuid="d1a20005-1001-0001-0001-000000000001">
+					<printWhenExpression><![CDATA[$F{inelig_5_label} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["     " + $F{inelig_5_label}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="200" y="82" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20005-1001-0001-0001-000000000002">
+					<printWhenExpression><![CDATA[$F{inelig_5_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_5_cust}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="280" y="82" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20005-1001-0001-0001-000000000003">
+					<printWhenExpression><![CDATA[$F{inelig_5_label} != null && $F{cust_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_5_cust}.divide($F{cust_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="310" y="82" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20005-1001-0001-0001-000000000004">
+					<printWhenExpression><![CDATA[$F{inelig_5_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_5_calc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="390" y="82" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20005-1001-0001-0001-000000000005">
+					<printWhenExpression><![CDATA[$F{inelig_5_label} != null && $F{calc_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_5_calc}.divide($F{calc_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="420" y="82" width="75" height="10" isRemoveLineWhenBlank="true" uuid="d1a20005-1001-0001-0001-000000000006">
+					<printWhenExpression><![CDATA[$F{inelig_5_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_5_cust}.subtract($F{inelig_5_calc})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="20" y="93" width="180" height="10" isRemoveLineWhenBlank="true" uuid="d1a20006-1001-0001-0001-000000000001">
+					<printWhenExpression><![CDATA[$F{inelig_6_label} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["     " + $F{inelig_6_label}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="200" y="93" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20006-1001-0001-0001-000000000002">
+					<printWhenExpression><![CDATA[$F{inelig_6_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_6_cust}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="280" y="93" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20006-1001-0001-0001-000000000003">
+					<printWhenExpression><![CDATA[$F{inelig_6_label} != null && $F{cust_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_6_cust}.divide($F{cust_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="310" y="93" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20006-1001-0001-0001-000000000004">
+					<printWhenExpression><![CDATA[$F{inelig_6_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_6_calc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="390" y="93" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20006-1001-0001-0001-000000000005">
+					<printWhenExpression><![CDATA[$F{inelig_6_label} != null && $F{calc_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_6_calc}.divide($F{calc_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="420" y="93" width="75" height="10" isRemoveLineWhenBlank="true" uuid="d1a20006-1001-0001-0001-000000000006">
+					<printWhenExpression><![CDATA[$F{inelig_6_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_6_cust}.subtract($F{inelig_6_calc})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="20" y="104" width="180" height="10" isRemoveLineWhenBlank="true" uuid="d1a20007-1001-0001-0001-000000000001">
+					<printWhenExpression><![CDATA[$F{inelig_7_label} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["     " + $F{inelig_7_label}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="200" y="104" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20007-1001-0001-0001-000000000002">
+					<printWhenExpression><![CDATA[$F{inelig_7_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_7_cust}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="280" y="104" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20007-1001-0001-0001-000000000003">
+					<printWhenExpression><![CDATA[$F{inelig_7_label} != null && $F{cust_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_7_cust}.divide($F{cust_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="310" y="104" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20007-1001-0001-0001-000000000004">
+					<printWhenExpression><![CDATA[$F{inelig_7_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_7_calc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="390" y="104" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20007-1001-0001-0001-000000000005">
+					<printWhenExpression><![CDATA[$F{inelig_7_label} != null && $F{calc_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_7_calc}.divide($F{calc_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="420" y="104" width="75" height="10" isRemoveLineWhenBlank="true" uuid="d1a20007-1001-0001-0001-000000000006">
+					<printWhenExpression><![CDATA[$F{inelig_7_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_7_cust}.subtract($F{inelig_7_calc})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="20" y="115" width="180" height="10" isRemoveLineWhenBlank="true" uuid="d1a20008-1001-0001-0001-000000000001">
+					<printWhenExpression><![CDATA[$F{inelig_8_label} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["     " + $F{inelig_8_label}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="200" y="115" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20008-1001-0001-0001-000000000002">
+					<printWhenExpression><![CDATA[$F{inelig_8_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_8_cust}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="280" y="115" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20008-1001-0001-0001-000000000003">
+					<printWhenExpression><![CDATA[$F{inelig_8_label} != null && $F{cust_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_8_cust}.divide($F{cust_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="310" y="115" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20008-1001-0001-0001-000000000004">
+					<printWhenExpression><![CDATA[$F{inelig_8_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_8_calc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="390" y="115" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20008-1001-0001-0001-000000000005">
+					<printWhenExpression><![CDATA[$F{inelig_8_label} != null && $F{calc_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_8_calc}.divide($F{calc_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="420" y="115" width="75" height="10" isRemoveLineWhenBlank="true" uuid="d1a20008-1001-0001-0001-000000000006">
+					<printWhenExpression><![CDATA[$F{inelig_8_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_8_cust}.subtract($F{inelig_8_calc})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="20" y="126" width="180" height="10" isRemoveLineWhenBlank="true" uuid="d1a20009-1001-0001-0001-000000000001">
+					<printWhenExpression><![CDATA[$F{inelig_9_label} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["     " + $F{inelig_9_label}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="200" y="126" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20009-1001-0001-0001-000000000002">
+					<printWhenExpression><![CDATA[$F{inelig_9_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_9_cust}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="280" y="126" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20009-1001-0001-0001-000000000003">
+					<printWhenExpression><![CDATA[$F{inelig_9_label} != null && $F{cust_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_9_cust}.divide($F{cust_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="310" y="126" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20009-1001-0001-0001-000000000004">
+					<printWhenExpression><![CDATA[$F{inelig_9_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_9_calc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="390" y="126" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20009-1001-0001-0001-000000000005">
+					<printWhenExpression><![CDATA[$F{inelig_9_label} != null && $F{calc_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_9_calc}.divide($F{calc_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="420" y="126" width="75" height="10" isRemoveLineWhenBlank="true" uuid="d1a20009-1001-0001-0001-000000000006">
+					<printWhenExpression><![CDATA[$F{inelig_9_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_9_cust}.subtract($F{inelig_9_calc})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="20" y="137" width="180" height="10" isRemoveLineWhenBlank="true" uuid="d1a20010-1001-0001-0001-000000000001">
+					<printWhenExpression><![CDATA[$F{inelig_10_label} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["     " + $F{inelig_10_label}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="200" y="137" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20010-1001-0001-0001-000000000002">
+					<printWhenExpression><![CDATA[$F{inelig_10_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_10_cust}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="280" y="137" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20010-1001-0001-0001-000000000003">
+					<printWhenExpression><![CDATA[$F{inelig_10_label} != null && $F{cust_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_10_cust}.divide($F{cust_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="310" y="137" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20010-1001-0001-0001-000000000004">
+					<printWhenExpression><![CDATA[$F{inelig_10_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_10_calc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="390" y="137" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20010-1001-0001-0001-000000000005">
+					<printWhenExpression><![CDATA[$F{inelig_10_label} != null && $F{calc_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_10_calc}.divide($F{calc_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="420" y="137" width="75" height="10" isRemoveLineWhenBlank="true" uuid="d1a20010-1001-0001-0001-000000000006">
+					<printWhenExpression><![CDATA[$F{inelig_10_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_10_cust}.subtract($F{inelig_10_calc})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="20" y="148" width="180" height="10" isRemoveLineWhenBlank="true" uuid="d1a20011-1001-0001-0001-000000000001">
+					<printWhenExpression><![CDATA[$F{inelig_11_label} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["     " + $F{inelig_11_label}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="200" y="148" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20011-1001-0001-0001-000000000002">
+					<printWhenExpression><![CDATA[$F{inelig_11_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_11_cust}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="280" y="148" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20011-1001-0001-0001-000000000003">
+					<printWhenExpression><![CDATA[$F{inelig_11_label} != null && $F{cust_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_11_cust}.divide($F{cust_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="310" y="148" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20011-1001-0001-0001-000000000004">
+					<printWhenExpression><![CDATA[$F{inelig_11_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_11_calc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="390" y="148" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20011-1001-0001-0001-000000000005">
+					<printWhenExpression><![CDATA[$F{inelig_11_label} != null && $F{calc_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_11_calc}.divide($F{calc_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="420" y="148" width="75" height="10" isRemoveLineWhenBlank="true" uuid="d1a20011-1001-0001-0001-000000000006">
+					<printWhenExpression><![CDATA[$F{inelig_11_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_11_cust}.subtract($F{inelig_11_calc})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="20" y="159" width="180" height="10" isRemoveLineWhenBlank="true" uuid="d1a20012-1001-0001-0001-000000000001">
+					<printWhenExpression><![CDATA[$F{inelig_12_label} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["     " + $F{inelig_12_label}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="200" y="159" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20012-1001-0001-0001-000000000002">
+					<printWhenExpression><![CDATA[$F{inelig_12_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_12_cust}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="280" y="159" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20012-1001-0001-0001-000000000003">
+					<printWhenExpression><![CDATA[$F{inelig_12_label} != null && $F{cust_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_12_cust}.divide($F{cust_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="310" y="159" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20012-1001-0001-0001-000000000004">
+					<printWhenExpression><![CDATA[$F{inelig_12_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_12_calc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="390" y="159" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20012-1001-0001-0001-000000000005">
+					<printWhenExpression><![CDATA[$F{inelig_12_label} != null && $F{calc_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_12_calc}.divide($F{calc_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="420" y="159" width="75" height="10" isRemoveLineWhenBlank="true" uuid="d1a20012-1001-0001-0001-000000000006">
+					<printWhenExpression><![CDATA[$F{inelig_12_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_12_cust}.subtract($F{inelig_12_calc})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="20" y="170" width="180" height="10" isRemoveLineWhenBlank="true" uuid="d1a20013-1001-0001-0001-000000000001">
+					<printWhenExpression><![CDATA[$F{inelig_13_label} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["     " + $F{inelig_13_label}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="200" y="170" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20013-1001-0001-0001-000000000002">
+					<printWhenExpression><![CDATA[$F{inelig_13_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_13_cust}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="280" y="170" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20013-1001-0001-0001-000000000003">
+					<printWhenExpression><![CDATA[$F{inelig_13_label} != null && $F{cust_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_13_cust}.divide($F{cust_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="310" y="170" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20013-1001-0001-0001-000000000004">
+					<printWhenExpression><![CDATA[$F{inelig_13_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_13_calc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="390" y="170" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20013-1001-0001-0001-000000000005">
+					<printWhenExpression><![CDATA[$F{inelig_13_label} != null && $F{calc_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_13_calc}.divide($F{calc_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="420" y="170" width="75" height="10" isRemoveLineWhenBlank="true" uuid="d1a20013-1001-0001-0001-000000000006">
+					<printWhenExpression><![CDATA[$F{inelig_13_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_13_cust}.subtract($F{inelig_13_calc})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="20" y="181" width="180" height="10" isRemoveLineWhenBlank="true" uuid="d1a20014-1001-0001-0001-000000000001">
+					<printWhenExpression><![CDATA[$F{inelig_14_label} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["     " + $F{inelig_14_label}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="200" y="181" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20014-1001-0001-0001-000000000002">
+					<printWhenExpression><![CDATA[$F{inelig_14_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_14_cust}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="280" y="181" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20014-1001-0001-0001-000000000003">
+					<printWhenExpression><![CDATA[$F{inelig_14_label} != null && $F{cust_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_14_cust}.divide($F{cust_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="310" y="181" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20014-1001-0001-0001-000000000004">
+					<printWhenExpression><![CDATA[$F{inelig_14_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_14_calc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="390" y="181" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20014-1001-0001-0001-000000000005">
+					<printWhenExpression><![CDATA[$F{inelig_14_label} != null && $F{calc_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_14_calc}.divide($F{calc_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="420" y="181" width="75" height="10" isRemoveLineWhenBlank="true" uuid="d1a20014-1001-0001-0001-000000000006">
+					<printWhenExpression><![CDATA[$F{inelig_14_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_14_cust}.subtract($F{inelig_14_calc})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="20" y="192" width="180" height="10" isRemoveLineWhenBlank="true" uuid="d1a20015-1001-0001-0001-000000000001">
+					<printWhenExpression><![CDATA[$F{inelig_15_label} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["     " + $F{inelig_15_label}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="200" y="192" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20015-1001-0001-0001-000000000002">
+					<printWhenExpression><![CDATA[$F{inelig_15_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_15_cust}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="280" y="192" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20015-1001-0001-0001-000000000003">
+					<printWhenExpression><![CDATA[$F{inelig_15_label} != null && $F{cust_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_15_cust}.divide($F{cust_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="310" y="192" width="80" height="10" isRemoveLineWhenBlank="true" uuid="d1a20015-1001-0001-0001-000000000004">
+					<printWhenExpression><![CDATA[$F{inelig_15_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_15_calc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="390" y="192" width="30" height="10" isRemoveLineWhenBlank="true" uuid="d1a20015-1001-0001-0001-000000000005">
+					<printWhenExpression><![CDATA[$F{inelig_15_label} != null && $F{calc_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_15_calc}.divide($F{calc_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="420" y="192" width="75" height="10" isRemoveLineWhenBlank="true" uuid="d1a20015-1001-0001-0001-000000000006">
+					<printWhenExpression><![CDATA[$F{inelig_15_label} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inelig_15_cust}.subtract($F{inelig_15_calc})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="206" width="200" height="10" uuid="e1a20001-0001-0001-0001-000000000001"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Total Ineligibles]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="200" y="206" width="80" height="10" uuid="e1a20001-0001-0001-0001-000000000002"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_total_ineligibles}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="280" y="206" width="30" height="10" uuid="e1a20001-0001-0001-0001-000000000003">
+					<printWhenExpression><![CDATA[$F{cust_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_total_ineligibles}.divide($F{cust_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="310" y="206" width="80" height="10" uuid="e1a20001-0001-0001-0001-000000000004"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{calc_total_ineligibles}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="390" y="206" width="30" height="10" uuid="e1a20001-0001-0001-0001-000000000005">
+					<printWhenExpression><![CDATA[$F{calc_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{calc_total_ineligibles}.divide($F{calc_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="420" y="206" width="75" height="10" uuid="e1a20001-0001-0001-0001-000000000006"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_total_ineligibles}.subtract($F{calc_total_ineligibles})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="219" width="200" height="10" uuid="e1a20002-0002-0002-0002-000000000001"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{section_type}.equals("AR") ? "Eligible Accounts Receivable" : "Eligible Inventory"]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="200" y="219" width="80" height="10" uuid="e1a20002-0002-0002-0002-000000000002"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_eligible}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="280" y="219" width="30" height="10" uuid="e1a20002-0002-0002-0002-000000000003">
+					<printWhenExpression><![CDATA[$F{cust_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_eligible}.divide($F{cust_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="310" y="219" width="80" height="10" uuid="e1a20002-0002-0002-0002-000000000004"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{calc_eligible}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="390" y="219" width="30" height="10" uuid="e1a20002-0002-0002-0002-000000000005">
+					<printWhenExpression><![CDATA[$F{calc_total}.compareTo(java.math.BigDecimal.ZERO) != 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="6" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{calc_eligible}.divide($F{calc_total}, 4, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="420" y="219" width="75" height="10" uuid="e1a20002-0002-0002-0002-000000000006"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_eligible}.subtract($F{calc_eligible})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="10" y="232" width="190" height="10" uuid="e1a20003-0003-0003-0003-000000000001"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[     Advance Rate]]></text>
+			</staticText>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="200" y="232" width="80" height="10" uuid="e1a20003-0003-0003-0003-000000000002"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_advance_rate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0%" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="310" y="232" width="80" height="10" uuid="e1a20003-0003-0003-0003-000000000003"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{calc_advance_rate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="245" width="200" height="10" uuid="e1a20004-0004-0004-0004-000000000001"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{section_type}.equals("AR") ? "Accounts Receivable Borrowing Base" : "Inventory Borrowing Base"]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="200" y="245" width="80" height="10" uuid="e1a20004-0004-0004-0004-000000000002"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_borrowing_base}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="310" y="245" width="80" height="10" uuid="e1a20004-0004-0004-0004-000000000003"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{calc_borrowing_base}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="420" y="245" width="75" height="10" uuid="e1a20004-0004-0004-0004-000000000004"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_borrowing_base}.subtract($F{calc_borrowing_base})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="110" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="2" width="572" height="1" uuid="f1a20001-0001-0001-0001-000000000001"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="5" width="200" height="10" forecolor="#2E75B6" uuid="f1a20001-0001-0001-0001-000000000002"/>
+				<textElement>
+					<font size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Borrowing Base]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="18" width="200" height="10" uuid="f1a20002-0002-0002-0002-000000000001"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Borrowing Base]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement x="200" y="18" width="80" height="10" uuid="f1a20002-0002-0002-0002-000000000002"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_total_bb}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement x="310" y="18" width="80" height="10" uuid="f1a20002-0002-0002-0002-000000000003"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{calc_total_bb}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement x="420" y="18" width="75" height="10" uuid="f1a20002-0002-0002-0002-000000000004"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_total_bb}.subtract($F{calc_total_bb})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="30" width="200" height="10" uuid="f1a20003-0003-0003-0003-000000000001"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Approved Line of Credit (LOC)]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement x="200" y="30" width="80" height="10" uuid="f1a20003-0003-0003-0003-000000000002"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{approved_loc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement x="310" y="30" width="80" height="10" uuid="f1a20003-0003-0003-0003-000000000003"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{approved_loc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="44" width="200" height="10" uuid="f1a20004-0004-0004-0004-000000000001"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lesser Borrowing Base or LOC]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement x="200" y="44" width="80" height="10" uuid="f1a20004-0004-0004-0004-000000000002"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_lesser_bb_or_loc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement x="310" y="44" width="80" height="10" uuid="f1a20004-0004-0004-0004-000000000003"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{calc_lesser_bb_or_loc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement x="420" y="44" width="75" height="10" uuid="f1a20004-0004-0004-0004-000000000004"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_lesser_bb_or_loc}.subtract($F{calc_lesser_bb_or_loc})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="56" width="200" height="10" uuid="f1a20005-0005-0005-0005-000000000001"/>
+				<textElement>
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Less:  Outstandings]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="67" width="190" height="10" uuid="f1a20006-0006-0006-0006-000000000001"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[     Line of Credit Balance]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement x="200" y="67" width="80" height="10" uuid="f1a20006-0006-0006-0006-000000000002"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{loc_balance}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement x="310" y="67" width="80" height="10" uuid="f1a20006-0006-0006-0006-000000000003"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{loc_balance}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement x="420" y="67" width="75" height="10" uuid="f1a20006-0006-0006-0006-000000000004"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{loc_balance}.subtract($F{loc_balance})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="78" width="190" height="10" uuid="f1a20007-0007-0007-0007-000000000001"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[     Letter of Credit Balance]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement x="200" y="78" width="80" height="10" uuid="f1a20007-0007-0007-0007-000000000002"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lc_balance}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement x="310" y="78" width="80" height="10" uuid="f1a20007-0007-0007-0007-000000000003"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lc_balance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="92" width="200" height="12" uuid="f1a20008-0008-0008-0008-000000000001"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Collateral Availability (Deficit)]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement x="200" y="92" width="80" height="12" uuid="f1a20008-0008-0008-0008-000000000002"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.5" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_availability}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement x="310" y="92" width="80" height="12" uuid="f1a20008-0008-0008-0008-000000000003"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.5" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{calc_availability}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement x="420" y="92" width="75" height="12" uuid="f1a20008-0008-0008-0008-000000000004"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.5" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cust_availability}.subtract($F{calc_availability})]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
