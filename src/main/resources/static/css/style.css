@@ -83,23 +83,31 @@ section h2 {
 }
 
 .report-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     border-bottom: 1px solid #eee;
+    padding-right: 10px;
 }
 
 .report-item:last-child {
     border-bottom: none;
 }
 
+.report-item:hover {
+    background: #f8f8f8;
+}
+
 .report-link {
     display: block;
+    flex: 1;
     padding: 15px 10px;
     text-decoration: none;
     color: inherit;
-    transition: background-color 0.15s;
 }
 
-.report-link:hover {
-    background: #f8f8f8;
+.delete-report-btn {
+    flex-shrink: 0;
 }
 
 .report-name {

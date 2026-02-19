@@ -28,7 +28,7 @@
                 </div>
 
                 <ul class="report-list" th:unless="${#lists.isEmpty(reports)}">
-                    <li th:each="report : ${reports}" class="report-item">
+                    <li th:each="report : ${reports}" class="report-item" th:data-filename="${report.fileName}">
                         <a th:href="@{/report/{id}(id=${report.id})}" class="report-link">
                             <span class="report-name" th:text="${report.displayName}">Report Name</span>
                             <span class="report-meta">
@@ -37,6 +37,7 @@
                                 <span th:text="${report.fileName}">filename.jrxml</span>
                             </span>
                         </a>
+                        <button type="button" class="btn btn-small btn-danger delete-report-btn" th:data-filename="${report.fileName}">Delete</button>
                     </li>
                 </ul>
             </section>
@@ -102,6 +103,21 @@
                     }
                 })
                 .catch(err => alert('Error refreshing: ' + err));
+        }
+
+        function deleteReport(fileName) {
+            if (!confirm('Delete report: ' + fileName + '?\n\nNote: Only uploaded reports can be deleted, not bundled ones.')) return;
+
+            fetch('/api/reports/' + encodeURIComponent(fileName), { method: 'DELETE' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert('Delete failed: ' + data.error);
+                    }
+                })
+                .catch(err => alert('Delete error: ' + err));
         }
 
         function uploadFile(file) {
@@ -219,6 +235,16 @@
                         imageDropZone.classList.add('disabled');
                     }
                 });
+
+            // Delete report button handlers
+            document.querySelectorAll('.delete-report-btn').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const fileName = this.dataset.filename;
+                    deleteReport(fileName);
+                });
+            });
 
             // File input change handler
             document.getElementById('fileInput').addEventListener('change', function(e) {
