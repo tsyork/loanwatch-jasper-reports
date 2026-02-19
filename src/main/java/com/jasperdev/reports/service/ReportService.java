@@ -347,9 +347,10 @@ public class ReportService {
             }
         }
 
-        // Fall back to classpath
+        // Fall back to classpath (use classpath: not classpath*: for single resource)
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Resource resource = resolver.getResource(reportsPath + fileName);
+        String resourcePath = "classpath:reports/" + fileName;
+        Resource resource = resolver.getResource(resourcePath);
 
         try (InputStream is = resource.getInputStream()) {
             JasperReport report = JasperCompileManager.compileReport(is);
