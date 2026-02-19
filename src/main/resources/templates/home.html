@@ -55,6 +55,20 @@
                 </form>
             </section>
 
+            <section class="images-section" id="imagesSection">
+                <h2>Report Images</h2>
+                <form id="imageUploadForm" enctype="multipart/form-data">
+                    <div class="upload-area upload-area-small" id="imageDropZone">
+                        <input type="file" id="imageFileInput" name="file" accept=".png,.jpg,.jpeg,.gif" style="display: none;">
+                        <p class="upload-text">Drag &amp; drop an image, or <button type="button" class="btn-link" onclick="document.getElementById('imageFileInput').click()">browse</button></p>
+                    </div>
+                </form>
+                <div id="imagesList" class="images-list">
+                    <p class="empty-state">No images uploaded</p>
+                </div>
+                <p class="hint" id="imagesHint">Use <code>$P{IMAGES_DIR} + "filename.png"</code> in your reports</p>
+            </section>
+
             <section class="datasources-section">
                 <h2>Data Sources</h2>
                 <div th:if="${#lists.isEmpty(dataSources)}" class="empty-state">
@@ -122,6 +136,58 @@
             });
         }
 
+        function uploadImage(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/api/images/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    renderImagesList(data.images);
+                } else {
+                    alert('Upload failed: ' + data.error);
+                }
+            })
+            .catch(err => alert('Upload error: ' + err));
+        }
+
+        function deleteImage(fileName) {
+            if (!confirm('Delete image: ' + fileName + '?')) return;
+
+            fetch('/api/images/' + encodeURIComponent(fileName), { method: 'DELETE' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        renderImagesList(data.images);
+                    } else {
+                        alert('Delete failed: ' + data.error);
+                    }
+                })
+                .catch(err => alert('Delete error: ' + err));
+        }
+
+        function renderImagesList(images) {
+            const container = document.getElementById('imagesList');
+            if (!images || images.length === 0) {
+                container.innerHTML = '<p class="empty-state">No images uploaded</p>';
+                return;
+            }
+
+            let html = '<ul class="image-list">';
+            images.forEach(img => {
+                html += '<li class="image-item">' +
+                    '<span class="image-name">' + img + '</span>' +
+                    '<button type="button" class="btn btn-small btn-danger" onclick="deleteImage(\'' + img + '\')">Delete</button>' +
+                    '</li>';
+            });
+            html += '</ul>';
+            container.innerHTML = html;
+        }
+
         // Check upload status and setup handlers
         document.addEventListener('DOMContentLoaded', function() {
             // Check if uploads are enabled
@@ -141,6 +207,19 @@
                     }
                 });
 
+            // Load images list
+            fetch('/api/images')
+                .then(response => response.json())
+                .then(data => {
+                    renderImagesList(data.images);
+                    const imageDropZone = document.getElementById('imageDropZone');
+                    if (data.directory) {
+                        imageDropZone.classList.add('enabled');
+                    } else {
+                        imageDropZone.classList.add('disabled');
+                    }
+                });
+
             // File input change handler
             document.getElementById('fileInput').addEventListener('change', function(e) {
                 if (this.files.length > 0) {
@@ -148,7 +227,7 @@
                 }
             });
 
-            // Drag and drop handlers
+            // Drag and drop handlers for reports
             const dropZone = document.getElementById('dropZone');
 
             dropZone.addEventListener('dragover', function(e) {
@@ -170,6 +249,40 @@
                         uploadFile(file);
                     } else {
                         alert('Please upload a .jrxml file');
+                    }
+                }
+            });
+
+            // Image upload handlers
+            document.getElementById('imageFileInput').addEventListener('change', function(e) {
+                if (this.files.length > 0) {
+                    uploadImage(this.files[0]);
+                    this.value = '';
+                }
+            });
+
+            const imageDropZone = document.getElementById('imageDropZone');
+
+            imageDropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('dragover');
+            });
+
+            imageDropZone.addEventListener('dragleave', function(e) {
+                this.classList.remove('dragover');
+            });
+
+            imageDropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+
+                if (e.dataTransfer.files.length > 0) {
+                    const file = e.dataTransfer.files[0];
+                    const ext = file.name.toLowerCase().split('.').pop();
+                    if (['png', 'jpg', 'jpeg', 'gif'].includes(ext)) {
+                        uploadImage(file);
+                    } else {
+                        alert('Please upload an image file (png, jpg, jpeg, gif)');
                     }
                 }
             });

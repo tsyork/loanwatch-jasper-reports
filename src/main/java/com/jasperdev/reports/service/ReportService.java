@@ -48,6 +48,9 @@ public class ReportService {
     // Filesystem path for development hot-reload or production uploads
     private Path filesystemReportsPath;
 
+    // Path for images used in reports
+    private Path imagesPath;
+
     // Whether we're in production mode with external storage
     private boolean productionMode = false;
 
@@ -84,6 +87,12 @@ public class ReportService {
             Path devPath = Path.of("src/main/resources/reports");
             if (Files.isDirectory(devPath)) {
                 filesystemReportsPath = devPath;
+                imagesPath = Path.of("src/main/resources/images");
+                try {
+                    Files.createDirectories(imagesPath);
+                } catch (IOException e) {
+                    log.warn("Could not create images directory: {}", e.getMessage());
+                }
                 log.info("Development mode: scanning filesystem at {}", devPath.toAbsolutePath());
             }
         } else {
@@ -93,7 +102,11 @@ public class ReportService {
                 try {
                     Files.createDirectories(extPath);
                     filesystemReportsPath = extPath;
+                    // Create images subdirectory
+                    imagesPath = extPath.resolve("images");
+                    Files.createDirectories(imagesPath);
                     log.info("Production mode: using external reports directory at {}", extPath.toAbsolutePath());
+                    log.info("Images directory at {}", imagesPath.toAbsolutePath());
                 } catch (IOException e) {
                     log.error("Could not create external reports directory: {}", e.getMessage());
                 }
@@ -305,6 +318,11 @@ public class ReportService {
         // Convert string parameters to proper types
         Map<String, Object> typedParams = convertParameters(reportInfo, parameters);
 
+        // Add images directory path for reports that need it
+        if (imagesPath != null) {
+            typedParams.put("IMAGES_DIR", imagesPath.toAbsolutePath().toString() + "/");
+        }
+
         // Get database connection
         try (Connection connection = dataSourceService.getConnection(dataSourceName)) {
             // Fill the report
@@ -504,6 +522,81 @@ public class ReportService {
      */
     public String getReportsDirectoryPath() {
         return filesystemReportsPath != null ? filesystemReportsPath.toString() : "classpath";
+    }
+
+    /**
+     * Saves an uploaded image file.
+     */
+    public boolean saveImage(String fileName, byte[] content) throws IOException {
+        if (imagesPath == null) {
+            throw new IOException("No writable images directory configured. Set REPORTS_PATH environment variable.");
+        }
+
+        // Validate filename - allow common image extensions
+        String lowerName = fileName.toLowerCase();
+        if (!lowerName.endsWith(".png") && !lowerName.endsWith(".jpg") &&
+            !lowerName.endsWith(".jpeg") && !lowerName.endsWith(".gif")) {
+            throw new IOException("File must be an image (png, jpg, jpeg, gif)");
+        }
+
+        // Sanitize filename to prevent path traversal
+        String sanitizedName = Path.of(fileName).getFileName().toString();
+        Path targetPath = imagesPath.resolve(sanitizedName);
+
+        Files.write(targetPath, content, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        log.info("Saved uploaded image: {}", sanitizedName);
+
+        return true;
+    }
+
+    /**
+     * Deletes an image file.
+     */
+    public boolean deleteImage(String fileName) throws IOException {
+        if (imagesPath == null) {
+            throw new IOException("No writable images directory configured");
+        }
+
+        String sanitizedName = Path.of(fileName).getFileName().toString();
+        Path targetPath = imagesPath.resolve(sanitizedName);
+
+        if (!Files.exists(targetPath)) {
+            throw new IOException("Image not found: " + sanitizedName);
+        }
+
+        Files.delete(targetPath);
+        log.info("Deleted image: {}", sanitizedName);
+
+        return true;
+    }
+
+    /**
+     * Lists all images in the images directory.
+     */
+    public List<String> listImages() {
+        List<String> images = new ArrayList<>();
+        if (imagesPath == null || !Files.isDirectory(imagesPath)) {
+            return images;
+        }
+
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(imagesPath,
+                "*.{png,jpg,jpeg,gif,PNG,JPG,JPEG,GIF}")) {
+            for (Path path : stream) {
+                images.add(path.getFileName().toString());
+            }
+        } catch (IOException e) {
+            log.error("Error listing images: {}", e.getMessage());
+        }
+
+        Collections.sort(images);
+        return images;
+    }
+
+    /**
+     * Gets the path to the images directory.
+     */
+    public String getImagesDirectoryPath() {
+        return imagesPath != null ? imagesPath.toString() : null;
     }
 
     /**

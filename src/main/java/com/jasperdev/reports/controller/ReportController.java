@@ -203,6 +203,81 @@ public class ReportController {
         Map<String, Object> result = new HashMap<>();
         result.put("enabled", reportService.isUploadEnabled());
         result.put("directory", reportService.getReportsDirectoryPath());
+        result.put("imagesDirectory", reportService.getImagesDirectoryPath());
+        return result;
+    }
+
+    /**
+     * API endpoint to upload an image.
+     */
+    @PostMapping("/api/images/upload")
+    @ResponseBody
+    public Map<String, Object> uploadImage(@RequestParam("file") MultipartFile file) {
+        Map<String, Object> result = new HashMap<>();
+
+        if (!reportService.isUploadEnabled()) {
+            result.put("success", false);
+            result.put("error", "Upload not enabled. Set REPORTS_PATH environment variable.");
+            return result;
+        }
+
+        if (file.isEmpty()) {
+            result.put("success", false);
+            result.put("error", "No file provided");
+            return result;
+        }
+
+        String fileName = file.getOriginalFilename();
+        if (fileName == null) {
+            result.put("success", false);
+            result.put("error", "Invalid file name");
+            return result;
+        }
+
+        try {
+            reportService.saveImage(fileName, file.getBytes());
+            result.put("success", true);
+            result.put("fileName", fileName);
+            result.put("images", reportService.listImages());
+        } catch (Exception e) {
+            log.error("Error uploading image: {}", e.getMessage(), e);
+            result.put("success", false);
+            result.put("error", e.getMessage());
+        }
+
+        return result;
+    }
+
+    /**
+     * API endpoint to delete an image.
+     */
+    @DeleteMapping("/api/images/{fileName}")
+    @ResponseBody
+    public Map<String, Object> deleteImage(@PathVariable String fileName) {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            reportService.deleteImage(fileName);
+            result.put("success", true);
+            result.put("images", reportService.listImages());
+        } catch (Exception e) {
+            log.error("Error deleting image: {}", e.getMessage(), e);
+            result.put("success", false);
+            result.put("error", e.getMessage());
+        }
+
+        return result;
+    }
+
+    /**
+     * API endpoint to list images.
+     */
+    @GetMapping("/api/images")
+    @ResponseBody
+    public Map<String, Object> listImages() {
+        Map<String, Object> result = new HashMap<>();
+        result.put("images", reportService.listImages());
+        result.put("directory", reportService.getImagesDirectoryPath());
         return result;
     }
 
