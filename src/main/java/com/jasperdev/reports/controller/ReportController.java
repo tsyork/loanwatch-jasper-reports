@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -128,6 +129,80 @@ public class ReportController {
         Map<String, Object> result = new HashMap<>();
         result.put("name", name);
         result.put("connected", dataSourceService.testConnection(name));
+        return result;
+    }
+
+    /**
+     * API endpoint to upload a new report.
+     */
+    @PostMapping("/api/reports/upload")
+    @ResponseBody
+    public Map<String, Object> uploadReport(@RequestParam("file") MultipartFile file) {
+        Map<String, Object> result = new HashMap<>();
+
+        if (!reportService.isUploadEnabled()) {
+            result.put("success", false);
+            result.put("error", "Upload not enabled. Set REPORTS_PATH environment variable.");
+            return result;
+        }
+
+        if (file.isEmpty()) {
+            result.put("success", false);
+            result.put("error", "No file provided");
+            return result;
+        }
+
+        String fileName = file.getOriginalFilename();
+        if (fileName == null || !fileName.endsWith(".jrxml")) {
+            result.put("success", false);
+            result.put("error", "File must be a .jrxml file");
+            return result;
+        }
+
+        try {
+            reportService.saveReport(fileName, file.getBytes());
+            result.put("success", true);
+            result.put("fileName", fileName);
+            result.put("reportCount", reportService.getAvailableReports().size());
+        } catch (Exception e) {
+            log.error("Error uploading report: {}", e.getMessage(), e);
+            result.put("success", false);
+            result.put("error", e.getMessage());
+        }
+
+        return result;
+    }
+
+    /**
+     * API endpoint to delete a report.
+     */
+    @DeleteMapping("/api/reports/{fileName}")
+    @ResponseBody
+    public Map<String, Object> deleteReport(@PathVariable String fileName) {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            reportService.deleteReport(fileName);
+            result.put("success", true);
+            result.put("reportCount", reportService.getAvailableReports().size());
+        } catch (Exception e) {
+            log.error("Error deleting report: {}", e.getMessage(), e);
+            result.put("success", false);
+            result.put("error", e.getMessage());
+        }
+
+        return result;
+    }
+
+    /**
+     * API endpoint to check upload status.
+     */
+    @GetMapping("/api/reports/upload-status")
+    @ResponseBody
+    public Map<String, Object> uploadStatus() {
+        Map<String, Object> result = new HashMap<>();
+        result.put("enabled", reportService.isUploadEnabled());
+        result.put("directory", reportService.getReportsDirectoryPath());
         return result;
     }
 

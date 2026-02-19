@@ -41,6 +41,20 @@
                 </ul>
             </section>
 
+            <section class="upload-section" id="uploadSection">
+                <h2>Upload Report</h2>
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <div class="upload-area" id="dropZone">
+                        <input type="file" id="fileInput" name="file" accept=".jrxml" style="display: none;">
+                        <p class="upload-text">Drag &amp; drop a .jrxml file here, or <button type="button" class="btn-link" onclick="document.getElementById('fileInput').click()">browse</button></p>
+                        <p class="upload-hint" id="uploadHint">Uploads disabled - REPORTS_PATH not configured</p>
+                    </div>
+                    <div id="uploadProgress" style="display: none;">
+                        <span class="upload-status">Uploading...</span>
+                    </div>
+                </form>
+            </section>
+
             <section class="datasources-section">
                 <h2>Data Sources</h2>
                 <div th:if="${#lists.isEmpty(dataSources)}" class="empty-state">
@@ -76,8 +90,91 @@
                 .catch(err => alert('Error refreshing: ' + err));
         }
 
-        // Attach click handlers to test buttons
+        function uploadFile(file) {
+            const progress = document.getElementById('uploadProgress');
+            const dropZone = document.getElementById('dropZone');
+
+            progress.style.display = 'block';
+            dropZone.classList.add('uploading');
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/api/reports/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                progress.style.display = 'none';
+                dropZone.classList.remove('uploading');
+
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Upload failed: ' + data.error);
+                }
+            })
+            .catch(err => {
+                progress.style.display = 'none';
+                dropZone.classList.remove('uploading');
+                alert('Upload error: ' + err);
+            });
+        }
+
+        // Check upload status and setup handlers
         document.addEventListener('DOMContentLoaded', function() {
+            // Check if uploads are enabled
+            fetch('/api/reports/upload-status')
+                .then(response => response.json())
+                .then(data => {
+                    const uploadSection = document.getElementById('uploadSection');
+                    const uploadHint = document.getElementById('uploadHint');
+                    const dropZone = document.getElementById('dropZone');
+
+                    if (data.enabled) {
+                        uploadHint.textContent = 'Directory: ' + data.directory;
+                        uploadHint.className = 'upload-hint enabled';
+                        dropZone.classList.add('enabled');
+                    } else {
+                        dropZone.classList.add('disabled');
+                    }
+                });
+
+            // File input change handler
+            document.getElementById('fileInput').addEventListener('change', function(e) {
+                if (this.files.length > 0) {
+                    uploadFile(this.files[0]);
+                }
+            });
+
+            // Drag and drop handlers
+            const dropZone = document.getElementById('dropZone');
+
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('dragover');
+            });
+
+            dropZone.addEventListener('dragleave', function(e) {
+                this.classList.remove('dragover');
+            });
+
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+
+                if (e.dataTransfer.files.length > 0) {
+                    const file = e.dataTransfer.files[0];
+                    if (file.name.endsWith('.jrxml')) {
+                        uploadFile(file);
+                    } else {
+                        alert('Please upload a .jrxml file');
+                    }
+                }
+            });
+
+            // Attach click handlers to test buttons
             document.querySelectorAll('.test-btn').forEach(function(btn) {
                 btn.addEventListener('click', function() {
                     const li = this.closest('.datasource-item');

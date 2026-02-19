@@ -39,11 +39,17 @@ public class ReportService {
     @Value("${jasper.reports.path:classpath:reports/}")
     private String reportsPath;
 
+    @Value("${jasper.reports.external.path:}")
+    private String externalReportsPath;
+
     @Value("${jasper.temp.directory:#{systemProperties['java.io.tmpdir']}/jasper-reports}")
     private String tempDirectory;
 
-    // Filesystem path for development hot-reload
+    // Filesystem path for development hot-reload or production uploads
     private Path filesystemReportsPath;
+
+    // Whether we're in production mode with external storage
+    private boolean productionMode = false;
 
     // Cache of compiled reports: fileName -> (lastModified, JasperReport)
     private final Map<String, CompiledReport> compiledReports = new ConcurrentHashMap<>();
@@ -71,16 +77,29 @@ public class ReportService {
         // Skip filesystem scanning if running on Railway or other production environments
         String railwayEnv = System.getenv("RAILWAY_ENVIRONMENT");
         String port = System.getenv("PORT");
-        boolean isProduction = railwayEnv != null || (port != null && !port.equals("8080"));
+        productionMode = railwayEnv != null || (port != null && !port.equals("8080"));
 
-        if (!isProduction) {
+        if (!productionMode) {
+            // Development mode: use src/main/resources/reports
             Path devPath = Path.of("src/main/resources/reports");
             if (Files.isDirectory(devPath)) {
                 filesystemReportsPath = devPath;
                 log.info("Development mode: scanning filesystem at {}", devPath.toAbsolutePath());
             }
         } else {
-            log.info("Production mode: scanning classpath for reports");
+            // Production mode: use external directory if configured
+            if (externalReportsPath != null && !externalReportsPath.isEmpty()) {
+                Path extPath = Path.of(externalReportsPath);
+                try {
+                    Files.createDirectories(extPath);
+                    filesystemReportsPath = extPath;
+                    log.info("Production mode: using external reports directory at {}", extPath.toAbsolutePath());
+                } catch (IOException e) {
+                    log.error("Could not create external reports directory: {}", e.getMessage());
+                }
+            } else {
+                log.info("Production mode: scanning classpath for reports (no external directory configured)");
+            }
         }
 
         // Initial scan for reports
@@ -91,23 +110,35 @@ public class ReportService {
      * Scans the reports directory and loads metadata for all JRXML files.
      */
     public void scanReports() {
-        // Use filesystem scanning in development mode for hot-reload
-        if (filesystemReportsPath != null) {
-            scanFilesystem();
+        Set<String> foundReports = new HashSet<>();
+
+        // In production with external directory: scan both classpath and external
+        if (productionMode && filesystemReportsPath != null) {
+            scanClasspath(foundReports);
+            scanFilesystem(foundReports);
+        } else if (filesystemReportsPath != null) {
+            // Development mode: scan filesystem only
+            scanFilesystem(foundReports);
         } else {
-            scanClasspath();
+            // Production without external directory: scan classpath only
+            scanClasspath(foundReports);
         }
+
+        // Remove reports that no longer exist
+        reportInfoCache.keySet().removeIf(name -> !foundReports.contains(name));
+        compiledReports.keySet().removeIf(name -> !foundReports.contains(name));
+        fileModificationTimes.keySet().removeIf(name -> !foundReports.contains(name));
+
+        log.debug("Found {} total reports", reportInfoCache.size());
     }
 
     /**
-     * Scans filesystem directly (development mode).
+     * Scans filesystem directly (development mode or external directory).
      */
-    private void scanFilesystem() {
+    private void scanFilesystem(Set<String> foundReports) {
         log.debug("Scanning filesystem for reports in: {}", filesystemReportsPath);
 
         try {
-            Set<String> foundReports = new HashSet<>();
-
             try (DirectoryStream<Path> stream = Files.newDirectoryStream(filesystemReportsPath, "*.jrxml")) {
                 for (Path path : stream) {
                     String fileName = path.getFileName().toString();
@@ -120,17 +151,12 @@ public class ReportService {
                         loadReportInfoFromPath(path);
                         fileModificationTimes.put(fileName, lastModified);
                         compiledReports.remove(fileName);
-                        log.info("Loaded/reloaded report: {}", fileName);
+                        log.info("Loaded/reloaded report from filesystem: {}", fileName);
                     }
                 }
             }
 
-            // Remove reports that no longer exist
-            reportInfoCache.keySet().removeIf(name -> !foundReports.contains(name));
-            compiledReports.keySet().removeIf(name -> !foundReports.contains(name));
-            fileModificationTimes.keySet().removeIf(name -> !foundReports.contains(name));
-
-            log.debug("Found {} reports", reportInfoCache.size());
+            log.debug("Found {} reports in filesystem", foundReports.size());
 
         } catch (IOException e) {
             log.error("Error scanning filesystem reports directory: {}", e.getMessage());
@@ -140,7 +166,7 @@ public class ReportService {
     /**
      * Scans classpath (production mode).
      */
-    private void scanClasspath() {
+    private void scanClasspath(Set<String> foundReports) {
         log.debug("Scanning classpath for reports in: {}", reportsPath);
 
         try {
@@ -148,12 +174,13 @@ public class ReportService {
             String pattern = reportsPath + "*.jrxml";
             Resource[] resources = resolver.getResources(pattern);
 
-            Set<String> foundReports = new HashSet<>();
-
             for (Resource resource : resources) {
                 try {
                     String fileName = resource.getFilename();
                     if (fileName == null) continue;
+
+                    // Skip if already found in external directory (external takes precedence)
+                    if (foundReports.contains(fileName)) continue;
 
                     foundReports.add(fileName);
 
@@ -166,19 +193,14 @@ public class ReportService {
                         fileModificationTimes.put(fileName, lastModified);
                         // Invalidate compiled cache
                         compiledReports.remove(fileName);
-                        log.info("Loaded/reloaded report: {}", fileName);
+                        log.info("Loaded/reloaded report from classpath: {}", fileName);
                     }
                 } catch (Exception e) {
                     log.warn("Error processing resource {}: {}", resource, e.getMessage());
                 }
             }
 
-            // Remove reports that no longer exist
-            reportInfoCache.keySet().removeIf(name -> !foundReports.contains(name));
-            compiledReports.keySet().removeIf(name -> !foundReports.contains(name));
-            fileModificationTimes.keySet().removeIf(name -> !foundReports.contains(name));
-
-            log.debug("Found {} reports", reportInfoCache.size());
+            log.debug("Found {} reports in classpath", foundReports.size());
 
         } catch (IOException e) {
             log.error("Error scanning reports directory: {}", e.getMessage());
@@ -313,17 +335,19 @@ public class ReportService {
         // Need to compile
         log.info("Compiling report: {}", fileName);
 
-        // Use filesystem in development mode
+        // Try filesystem first (development mode or external directory)
         if (filesystemReportsPath != null) {
             Path jrxmlPath = filesystemReportsPath.resolve(fileName);
-            try (InputStream is = Files.newInputStream(jrxmlPath)) {
-                JasperReport report = JasperCompileManager.compileReport(is);
-                compiledReports.put(fileName, new CompiledReport(currentModTime != null ? currentModTime : 0, report));
-                return report;
+            if (Files.exists(jrxmlPath)) {
+                try (InputStream is = Files.newInputStream(jrxmlPath)) {
+                    JasperReport report = JasperCompileManager.compileReport(is);
+                    compiledReports.put(fileName, new CompiledReport(currentModTime != null ? currentModTime : 0, report));
+                    return report;
+                }
             }
         }
 
-        // Use classpath in production mode
+        // Fall back to classpath
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         Resource resource = resolver.getResource(reportsPath + fileName);
 
@@ -405,6 +429,80 @@ public class ReportService {
         }
 
         throw new ParseException("Could not parse date: " + value, 0);
+    }
+
+    /**
+     * Saves an uploaded JRXML file.
+     *
+     * @param fileName The name of the file
+     * @param content  The file content
+     * @return true if saved successfully
+     */
+    public boolean saveReport(String fileName, byte[] content) throws IOException {
+        if (filesystemReportsPath == null) {
+            throw new IOException("No writable reports directory configured. Set REPORTS_PATH environment variable.");
+        }
+
+        // Validate filename
+        if (!fileName.endsWith(".jrxml")) {
+            throw new IOException("File must have .jrxml extension");
+        }
+
+        // Sanitize filename to prevent path traversal
+        String sanitizedName = Path.of(fileName).getFileName().toString();
+        Path targetPath = filesystemReportsPath.resolve(sanitizedName);
+
+        Files.write(targetPath, content, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        log.info("Saved uploaded report: {}", sanitizedName);
+
+        // Trigger rescan to pick up the new file
+        scanReports();
+
+        return true;
+    }
+
+    /**
+     * Deletes a report file.
+     *
+     * @param fileName The name of the file to delete
+     * @return true if deleted successfully
+     */
+    public boolean deleteReport(String fileName) throws IOException {
+        if (filesystemReportsPath == null) {
+            throw new IOException("No writable reports directory configured");
+        }
+
+        // Sanitize filename to prevent path traversal
+        String sanitizedName = Path.of(fileName).getFileName().toString();
+        Path targetPath = filesystemReportsPath.resolve(sanitizedName);
+
+        if (!Files.exists(targetPath)) {
+            throw new IOException("Report not found in external directory: " + sanitizedName);
+        }
+
+        Files.delete(targetPath);
+        log.info("Deleted report: {}", sanitizedName);
+
+        // Clear caches
+        reportInfoCache.remove(sanitizedName);
+        compiledReports.remove(sanitizedName);
+        fileModificationTimes.remove(sanitizedName);
+
+        return true;
+    }
+
+    /**
+     * Checks if uploads are enabled.
+     */
+    public boolean isUploadEnabled() {
+        return filesystemReportsPath != null;
+    }
+
+    /**
+     * Gets the path to the reports directory (for display purposes).
+     */
+    public String getReportsDirectoryPath() {
+        return filesystemReportsPath != null ? filesystemReportsPath.toString() : "classpath";
     }
 
     /**

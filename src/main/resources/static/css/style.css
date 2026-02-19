@@ -349,6 +349,80 @@ footer {
     font-size: 0.9rem;
 }
 
+/* Upload Section */
+.upload-section {
+    background: #f8f9fa;
+    border: 2px dashed #dee2e6;
+}
+
+.upload-area {
+    padding: 30px;
+    text-align: center;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.upload-area.enabled {
+    cursor: pointer;
+    border: 2px dashed #0066cc;
+    background: #f0f7ff;
+}
+
+.upload-area.enabled:hover,
+.upload-area.dragover {
+    background: #e0efff;
+    border-color: #0052a3;
+}
+
+.upload-area.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.upload-area.uploading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.upload-text {
+    margin: 0 0 10px 0;
+    color: #495057;
+}
+
+.upload-hint {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.upload-hint.enabled {
+    color: #28a745;
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    color: #0066cc;
+    cursor: pointer;
+    font-size: inherit;
+    padding: 0;
+    text-decoration: underline;
+}
+
+.btn-link:hover {
+    color: #0052a3;
+}
+
+#uploadProgress {
+    text-align: center;
+    padding: 10px;
+}
+
+.upload-status {
+    color: #0066cc;
+    font-weight: 500;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
     .container {
